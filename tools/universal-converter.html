@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal File Converter – Konversi Semua Format – ConvertHUB</title>
+  <meta name="description" content="Konversi file ke berbagai format: JPG, PNG, WebP, PDF, MP3, GIF dan lainnya. Upload satu file, pilih format tujuan, selesai — langsung di browser.">
+  <link rel="stylesheet" href="../css/style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6762425743604699" crossorigin="anonymous"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+  <style>
+    .format-grid { display: flex; flex-wrap: wrap; gap: .5rem; margin: .75rem 0; }
+    .fmt-chip { padding: .4rem .9rem; border-radius: 999px; border: 2px solid var(--border); font-size: .85rem; font-weight: 600; cursor: pointer; background: var(--bg); color: var(--text); transition: all .15s; }
+    .fmt-chip:hover { border-color: var(--primary); color: var(--primary); }
+    .fmt-chip.selected { border-color: var(--primary); background: var(--primary); color: #fff; }
+    .detected-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1rem 0; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .detected-box .file-type-badge { font-size: 1.5rem; font-weight: 800; padding: .3rem .8rem; border-radius: 8px; background: #dbeafe; color: #1d4ed8; font-family: monospace; }
+    .detected-box .file-meta { flex: 1; }
+    .detected-box .file-meta strong { display: block; font-size: .95rem; }
+    .detected-box .file-meta span { font-size: .8rem; color: var(--text-muted); }
+    .convert-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin: 1rem 0; }
+    .convert-section h3 { font-size: .9rem; font-weight: 700; margin-bottom: .75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
+    .quality-row { display: flex; align-items: center; gap: .75rem; margin-top: .75rem; flex-wrap: wrap; }
+    .quality-row label { font-size: .85rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 22v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L21 8M3 16l2.64 2.36A9 9 0 0020.49 15"/></svg>
+      Convert<span>HUB</span>
+    </a>
+    <button class="menu-toggle" aria-label="Buka menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <nav>
+      <a href="../gambar/index.html"><i class="fa-solid fa-image"></i> Gambar</a>
+      <a href="../video/index.html"><i class="fa-solid fa-film"></i> Video</a>
+      <a href="../pdf/index.html"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+      <a href="../lainnya/index.html" class="active"><i class="fa-solid fa-screwdriver-wrench"></i> Lainnya</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="tool-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Beranda</a><span>›</span>
+      <a href="../lainnya/index.html">Lainnya</a><span>›</span>
+      <span>Universal Converter</span>
+    </nav>
+    <div class="tool-header">
+      <div class="t-icon"><i class="fa-solid fa-shuffle icon-orange"></i></div>
+      <h1>Universal File Converter</h1>
+      <p>Upload satu file — otomatis terdeteksi formatnya. Pilih format tujuan lalu konversi. Semua di browser.</p>
+    </div>
+    <div class="steps">
+      <h3>Cara Pakai</h3>
+      <ol>
+        <li>Upload file (gambar, PDF, atau video MP4).</li>
+        <li>Format yang kompatibel akan muncul otomatis.</li>
+        <li>Pilih format tujuan lalu klik Konversi.</li>
+      </ol>
+    </div>
+
+    <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Area unggah file">
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,application/pdf,video/mp4" aria-label="Pilih file">
+      <div class="dz-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+      <strong>Seret file ke sini</strong>
+      <p>JPG · PNG · WebP · GIF · BMP · PDF · MP4</p>
+    </div>
+
+    <div id="alertBox"></div>
+
+    <div id="detectedBox" class="detected-box" style="display:none"></div>
+
+    <div id="convertSection" class="convert-section" style="display:none">
+      <h3>Pilih Format Tujuan</h3>
+      <div class="format-grid" id="formatGrid"></div>
+      <div id="qualityRow" class="quality-row" style="display:none">
+        <label for="qualitySlider">Kualitas: <strong id="qualityVal">85</strong>%</label>
+        <input type="range" id="qualitySlider" min="10" max="100" value="85" style="flex:1;max-width:200px">
+      </div>
+      <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn btn-primary" id="convertBtn"><i class="fa-solid fa-arrows-rotate"></i> Konversi</button>
+        <button class="btn btn-outline" id="resetBtn"><i class="fa-solid fa-xmark"></i> Ganti File</button>
+      </div>
+    </div>
+
+    <div class="progress-wrap hidden" id="progressWrap">
+      <div class="progress-label"><span id="progressLabel">Memproses...</span><span id="progressText">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="download-card hidden" id="downloadCard">
+      <div class="download-info">
+        <strong id="downloadTitle">Konversi selesai!</strong>
+        <span id="downloadSize"></span>
+      </div>
+      <a id="downloadBtn" class="btn btn-success">⬇️ Unduh Hasil</a>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="../gambar/index.html">Gambar</a><a href="../video/index.html">Video</a>
+      <a href="../pdf/index.html">PDF</a><a href="../lainnya/index.html">Lainnya</a>
+    </div>
+    <p>© 2025 ConvertHUB · Privasi terjaga · Semua proses di browser</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+const { jsPDF } = window.jspdf;
+
+const dropZone    = document.getElementById('dropZone');
+const fileInput   = document.getElementById('fileInput');
+const alertBox    = document.getElementById('alertBox');
+const detectedBox = document.getElementById('detectedBox');
+const convertSection = document.getElementById('convertSection');
+const formatGrid  = document.getElementById('formatGrid');
+const qualityRow  = document.getElementById('qualityRow');
+const qualitySlider = document.getElementById('qualitySlider');
+const qualityVal  = document.getElementById('qualityVal');
+const convertBtn  = document.getElementById('convertBtn');
+const resetBtn    = document.getElementById('resetBtn');
+const progressWrap = document.getElementById('progressWrap');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const progressLabel = document.getElementById('progressLabel');
+const downloadCard = document.getElementById('downloadCard');
+const downloadBtn  = document.getElementById('downloadBtn');
+const downloadSize = document.getElementById('downloadSize');
+const downloadTitle = document.getElementById('downloadTitle');
+
+let currentFile = null, selectedFmt = null, ffmpeg = null, ffmpegLoaded = false;
+
+const FORMAT_MAP = {
+  'image/jpeg':       { label: 'JPG',  targets: ['PNG','WebP','BMP','PDF'] },
+  'image/png':        { label: 'PNG',  targets: ['JPG','WebP','BMP','PDF'] },
+  'image/webp':       { label: 'WebP', targets: ['JPG','PNG','BMP','PDF'] },
+  'image/gif':        { label: 'GIF',  targets: ['JPG','PNG','WebP','PDF'] },
+  'image/bmp':        { label: 'BMP',  targets: ['JPG','PNG','WebP','PDF'] },
+  'application/pdf':  { label: 'PDF',  targets: ['PNG','JPG','ZIP (semua halaman)'] },
+  'video/mp4':        { label: 'MP4',  targets: ['MP3','GIF'] },
+};
+
+qualitySlider.addEventListener('input', () => qualityVal.textContent = qualitySlider.value);
+
+function setProgress(pct, label) {
+  progressWrap.classList.remove('hidden');
+  progressFill.style.width = pct + '%';
+  progressText.textContent = pct + '%';
+  if (label) progressLabel.textContent = label;
+}
+
+function reset() {
+  fileInput.value = '';
+  currentFile = null; selectedFmt = null;
+  detectedBox.style.display = 'none';
+  convertSection.style.display = 'none';
+  progressWrap.classList.add('hidden');
+  downloadCard.classList.add('hidden');
+  dropZone.classList.remove('hidden');
+  alertBox.innerHTML = '';
+}
+
+function loadFile(file) {
+  alertBox.innerHTML = '';
+  const map = FORMAT_MAP[file.type];
+  if (!map) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Format file tidak didukung.</div>'; return; }
+  if (file.size > 200 * 1024 * 1024) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ File terlalu besar (maks. 200MB).</div>'; return; }
+  currentFile = file; selectedFmt = null;
+  dropZone.classList.add('hidden');
+  downloadCard.classList.add('hidden');
+  progressWrap.classList.add('hidden');
+
+  detectedBox.style.display = 'flex';
+  detectedBox.innerHTML = `
+    <div class="file-type-badge">${map.label}</div>
+    <div class="file-meta">
+      <strong>${file.name}</strong>
+      <span>${CH.formatSize(file.size)}</span>
+    </div>`;
+
+  formatGrid.innerHTML = '';
+  map.targets.forEach(fmt => {
+    const chip = document.createElement('button');
+    chip.className = 'fmt-chip'; chip.textContent = fmt;
+    chip.addEventListener('click', () => {
+      formatGrid.querySelectorAll('.fmt-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedFmt = fmt;
+      const needsQuality = ['JPG','WebP'].includes(fmt) && file.type !== 'video/mp4';
+      qualityRow.style.display = needsQuality ? 'flex' : 'none';
+    });
+    formatGrid.appendChild(chip);
+  });
+  convertSection.style.display = 'block';
+}
+
+/* ── IMAGE CONVERSIONS ── */
+async function convertImage(file, toFmt) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        if (toFmt === 'PDF') {
+          const ori = img.width > img.height ? 'landscape' : 'portrait';
+          const doc = new jsPDF({ orientation: ori, unit: 'px', format: [img.width, img.height] });
+          doc.addImage(e.target.result, file.type === 'image/png' ? 'PNG' : 'JPEG', 0, 0, img.width, img.height);
+          resolve({ blob: doc.output('blob'), ext: 'pdf', mime: 'application/pdf' });
+          return;
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width; canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (toFmt === 'JPG') { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+        ctx.drawImage(img, 0, 0);
+        const mimeMap = { JPG: 'image/jpeg', PNG: 'image/png', WebP: 'image/webp', BMP: 'image/bmp' };
+        const extMap  = { JPG: 'jpg', PNG: 'png', WebP: 'webp', BMP: 'bmp' };
+        const mime = mimeMap[toFmt]; const ext = extMap[toFmt];
+        const quality = parseInt(qualitySlider.value) / 100;
+        canvas.toBlob(blob => resolve({ blob, ext, mime }), mime, quality);
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ── PDF CONVERSIONS ── */
+async function convertPDF(file, toFmt) {
+  const ab = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
+  const scale = 2;
+  if (toFmt === 'ZIP (semua halaman)') {
+    const zip = new JSZip();
+    for (let i = 1; i <= pdf.numPages; i++) {
+      setProgress(Math.round(i / pdf.numPages * 90), `Rendering halaman ${i}/${pdf.numPages}...`);
+      const page = await pdf.getPage(i);
+      const vp = page.getViewport({ scale });
+      const canvas = document.createElement('canvas');
+      canvas.width = vp.width; canvas.height = vp.height;
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+      await new Promise(res => canvas.toBlob(blob => { zip.file(`halaman-${i}.png`, blob); res(); }, 'image/png'));
+    }
+    const blob = await zip.generateAsync({ type: 'blob' });
+    return { blob, ext: 'zip', mime: 'application/zip' };
+  }
+  const page = await pdf.getPage(1);
+  const vp = page.getViewport({ scale });
+  const canvas = document.createElement('canvas');
+  canvas.width = vp.width; canvas.height = vp.height;
+  await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+  const mime = toFmt === 'JPG' ? 'image/jpeg' : 'image/png';
+  const ext  = toFmt === 'JPG' ? 'jpg' : 'png';
+  const blob = await new Promise(res => canvas.toBlob(res, mime, 0.92));
+  return { blob, ext, mime };
+}
+
+/* ── VIDEO CONVERSIONS (ffmpeg.wasm) ── */
+async function loadFFmpeg() {
+  if (ffmpegLoaded) return true;
+  if (!window.FFmpeg) {
+    await new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js';
+      s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+  setProgress(5, 'Memuat ffmpeg.wasm (~30 detik pertama kali)...');
+  const { createFFmpeg, fetchFile } = FFmpeg;
+  ffmpeg = createFFmpeg({ log: false, progress: ({ ratio }) => setProgress(Math.min(Math.round(ratio * 50) + 5, 55), 'Memuat ffmpeg.wasm...') });
+  await ffmpeg.load();
+  ffmpegLoaded = true;
+  window._fetchFile = fetchFile;
+  return true;
+}
+
+async function convertVideo(file, toFmt) {
+  const ok = await loadFFmpeg();
+  if (!ok) throw new Error('Gagal memuat ffmpeg');
+  ffmpeg.FS('writeFile', 'input.mp4', await window._fetchFile(file));
+  if (toFmt === 'MP3') {
+    ffmpeg.setProgress(({ ratio }) => setProgress(Math.round(ratio * 40) + 55, 'Mengekstrak audio...'));
+    await ffmpeg.run('-i', 'input.mp4', '-q:a', '2', '-map', 'a', 'output.mp3');
+    const data = ffmpeg.FS('readFile', 'output.mp3');
+    try { ffmpeg.FS('unlink', 'input.mp4'); ffmpeg.FS('unlink', 'output.mp3'); } catch(e) {}
+    return { blob: new Blob([data.buffer], { type: 'audio/mpeg' }), ext: 'mp3', mime: 'audio/mpeg' };
+  }
+  if (toFmt === 'GIF') {
+    ffmpeg.setProgress(({ ratio }) => setProgress(Math.round(ratio * 40) + 55, 'Membuat GIF...'));
+    await ffmpeg.run('-i', 'input.mp4', '-t', '8', '-vf', 'fps=10,scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse', '-loop', '0', 'output.gif');
+    const data = ffmpeg.FS('readFile', 'output.gif');
+    try { ffmpeg.FS('unlink', 'input.mp4'); ffmpeg.FS('unlink', 'output.gif'); } catch(e) {}
+    return { blob: new Blob([data.buffer], { type: 'image/gif' }), ext: 'gif', mime: 'image/gif' };
+  }
+}
+
+convertBtn.addEventListener('click', async () => {
+  if (!currentFile) return;
+  if (!selectedFmt) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Pilih format tujuan terlebih dahulu.</div>'; return; }
+  alertBox.innerHTML = '';
+  convertBtn.disabled = true; convertBtn.innerHTML = '<span class="spinner"></span> Mengonversi...';
+  setProgress(10, 'Memproses...');
+  try {
+    let result;
+    const type = currentFile.type;
+    if (type.startsWith('image/')) result = await convertImage(currentFile, selectedFmt);
+    else if (type === 'application/pdf') result = await convertPDF(currentFile, selectedFmt);
+    else if (type === 'video/mp4') result = await convertVideo(currentFile, selectedFmt);
+    else throw new Error('Format tidak didukung');
+
+    const baseName = currentFile.name.replace(/\.[^.]+$/, '');
+    const url = URL.createObjectURL(result.blob);
+    downloadBtn.href = url;
+    downloadBtn.download = `${baseName}_converted.${result.ext}`;
+    downloadTitle.textContent = `✅ Konversi ke ${selectedFmt} selesai!`;
+    downloadSize.textContent = CH.formatSize(result.blob.size);
+    setProgress(100, 'Selesai!');
+    downloadCard.classList.remove('hidden');
+  } catch(e) {
+    alertBox.innerHTML = `<div class="alert alert-error">⚠️ Konversi gagal: ${e.message || 'Coba file lain.'}</div>`;
+    progressWrap.classList.add('hidden');
+  }
+  convertBtn.disabled = false; convertBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Konversi';
+});
+
+resetBtn.addEventListener('click', reset);
+fileInput.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+</script>
+</body>
+</html>
