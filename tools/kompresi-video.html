@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kompresi Video Online – ConvertHUB</title>
+  <meta name="description" content="Kompres ukuran file video MP4 secara online gratis menggunakan ffmpeg.wasm. Langsung di browser, file tidak dikirim ke server.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🔄 Convert<span>HUB</span></a>
+    <button class="menu-toggle" aria-label="Buka menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <nav>
+      <a href="../gambar/index.html">🖼️ Gambar</a>
+      <a href="../video/index.html" class="active">🎬 Video</a>
+      <a href="../pdf/index.html">📄 PDF</a>
+      <a href="../lainnya/index.html">⚙️ Lainnya</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="tool-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Beranda</a><span>›</span>
+      <a href="../video/index.html">Video</a><span>›</span>
+      <span>Kompresi Video</span>
+    </nav>
+    <div class="tool-header">
+      <div class="t-icon">📦</div>
+      <h1>Kompresi Video</h1>
+      <p>Kurangi ukuran file video MP4 menggunakan encoding H.264 di browser. Direkomendasikan untuk video pendek (&lt;60 detik).</p>
+    </div>
+    <div class="alert alert-info">⏳ Tool ini menggunakan ffmpeg.wasm — loading awal ~30 detik. Video panjang mungkin lambat diproses di browser.</div>
+    <div class="steps">
+      <h3>Cara Pakai</h3>
+      <ol>
+        <li>Pilih file video MP4 (disarankan di bawah 100MB).</li>
+        <li>Pilih level kualitas (CRF lebih tinggi = ukuran lebih kecil).</li>
+        <li>Klik "Kompres" dan tunggu prosesnya selesai.</li>
+      </ol>
+    </div>
+    <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Area unggah video">
+      <input type="file" id="fileInput" accept="video/mp4,.mp4" aria-label="Pilih file video MP4">
+      <div class="dz-icon">📦</div>
+      <strong>Seret file MP4 ke sini</strong>
+      <p>MP4 · Disarankan di bawah 100MB</p>
+    </div>
+    <div id="alertBox"></div>
+    <div class="preview-area hidden" id="previewArea">
+      <h3>File Dipilih</h3>
+      <div class="video-player-wrap">
+        <video id="videoPreview" controls aria-label="Pratinjau video"></video>
+      </div>
+      <div class="file-info" id="fileInfo"></div>
+      <div class="controls" style="margin-top:1rem">
+        <div class="control-group">
+          <label for="crfSlider">Kualitas (CRF): <strong id="crfVal">28</strong> <small style="color:var(--text-muted)">(18=terbaik, 51=terkecil)</small></label>
+          <input type="range" id="crfSlider" min="18" max="45" value="28">
+        </div>
+        <div class="control-group" style="flex:0">
+          <label for="presetSelect">Kecepatan</label>
+          <select id="presetSelect">
+            <option value="ultrafast">Sangat Cepat (file lebih besar)</option>
+            <option value="fast" selected>Cepat</option>
+            <option value="medium">Sedang</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="convertBtn">📦 Kompres Video</button>
+        <button class="btn btn-outline" id="resetBtn">🔄 Ganti File</button>
+      </div>
+    </div>
+    <div class="progress-wrap hidden" id="progressWrap">
+      <div class="progress-label"><span id="progressLabel">Memproses...</span><span id="progressText">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="download-card hidden" id="downloadCard">
+      <div class="download-info">
+        <strong>✅ Kompresi selesai!</strong>
+        <span id="downloadSize"></span>
+      </div>
+      <a id="downloadBtn" class="btn btn-success" download="compressed.mp4">⬇️ Unduh Video</a>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="../gambar/index.html">Gambar</a><a href="../video/index.html">Video</a>
+      <a href="../pdf/index.html">PDF</a><a href="../lainnya/index.html">Lainnya</a>
+    </div>
+    <p>© 2025 ConvertHUB · Privasi terjaga · Semua proses di browser</p>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const alertBox = document.getElementById('alertBox');
+const previewArea = document.getElementById('previewArea');
+const videoPreview = document.getElementById('videoPreview');
+const fileInfo = document.getElementById('fileInfo');
+const crfSlider = document.getElementById('crfSlider');
+const crfVal = document.getElementById('crfVal');
+const presetSelect = document.getElementById('presetSelect');
+const convertBtn = document.getElementById('convertBtn');
+const resetBtn = document.getElementById('resetBtn');
+const progressWrap = document.getElementById('progressWrap');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const progressLabel = document.getElementById('progressLabel');
+const downloadCard = document.getElementById('downloadCard');
+const downloadBtn = document.getElementById('downloadBtn');
+const downloadSize = document.getElementById('downloadSize');
+let currentFile = null, ffmpegLoaded = false, ffmpeg = null;
+
+crfSlider.addEventListener('input', () => crfVal.textContent = crfSlider.value);
+
+function setProgress(pct, label) {
+  progressWrap.classList.remove('hidden');
+  progressFill.style.width = pct + '%';
+  progressText.textContent = pct + '%';
+  if (label) progressLabel.textContent = label;
+}
+
+async function loadFFmpeg() {
+  if (ffmpegLoaded) return true;
+  setProgress(5, 'Memuat ffmpeg.wasm...');
+  try {
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    ffmpeg = createFFmpeg({ log: false, progress: ({ ratio }) => setProgress(Math.min(Math.round(ratio * 50) + 5, 55), 'Memuat ffmpeg.wasm...') });
+    await ffmpeg.load();
+    ffmpegLoaded = true; window._fetchFile = fetchFile; return true;
+  } catch(e) {
+    alertBox.innerHTML = '<div class="alert alert-error">⚠️ Gagal memuat ffmpeg.wasm. Pastikan koneksi internet aktif.</div>';
+    progressWrap.classList.add('hidden'); return false;
+  }
+}
+
+function loadFile(file) {
+  alertBox.innerHTML = '';
+  if (!file || !file.type.match('video/mp4')) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Harap unggah file MP4.</div>'; return; }
+  currentFile = file;
+  videoPreview.src = URL.createObjectURL(file);
+  fileInfo.innerHTML = `<span class="file-info-item">📁 ${file.name}</span><span class="file-info-item">💾 ${CH.formatSize(file.size)}</span>`;
+  dropZone.classList.add('hidden'); previewArea.classList.remove('hidden'); downloadCard.classList.add('hidden');
+}
+
+convertBtn.addEventListener('click', async () => {
+  if (!currentFile) return;
+  convertBtn.disabled = true; convertBtn.innerHTML = '<span class="spinner"></span> Memproses...';
+  const ok = await loadFFmpeg();
+  if (!ok) { convertBtn.disabled = false; convertBtn.innerHTML = '📦 Kompres Video'; return; }
+  setProgress(55, 'Mengompres video...');
+  try {
+    ffmpeg.FS('writeFile', 'input.mp4', await window._fetchFile(currentFile));
+    ffmpeg.setProgress(({ ratio }) => setProgress(Math.round(ratio * 40) + 55, 'Mengompres video...'));
+    await ffmpeg.run('-i', 'input.mp4', '-vcodec', 'libx264', '-crf', crfSlider.value, '-preset', presetSelect.value, '-acodec', 'copy', 'output.mp4');
+    const data = ffmpeg.FS('readFile', 'output.mp4');
+    const blob = new Blob([data.buffer], { type: 'video/mp4' });
+    downloadBtn.href = URL.createObjectURL(blob);
+    downloadBtn.download = currentFile.name.replace('.mp4', '') + '_compressed.mp4';
+    const saved = ((1 - blob.size / currentFile.size) * 100).toFixed(1);
+    downloadSize.textContent = `${CH.formatSize(currentFile.size)} → ${CH.formatSize(blob.size)} (hemat ${saved}%)`;
+    setProgress(100, 'Selesai!'); downloadCard.classList.remove('hidden');
+    try { ffmpeg.FS('unlink', 'input.mp4'); ffmpeg.FS('unlink', 'output.mp4'); } catch(e) {}
+  } catch(e) {
+    alertBox.innerHTML = '<div class="alert alert-error">⚠️ Kompresi gagal. Coba file lebih kecil atau format berbeda.</div>'; progressWrap.classList.add('hidden');
+  }
+  convertBtn.disabled = false; convertBtn.innerHTML = '📦 Kompres Video';
+});
+
+fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); loadFile(e.dataTransfer.files[0]); });
+dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+resetBtn.addEventListener('click', () => { fileInput.value = ''; alertBox.innerHTML = ''; currentFile = null; previewArea.classList.add('hidden'); downloadCard.classList.add('hidden'); progressWrap.classList.add('hidden'); dropZone.classList.remove('hidden'); });
+</script>
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+// Mobile nav toggle
+const toggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('nav');
+if (toggle && nav) {
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+  document.addEventListener('click', e => {
+    if (!toggle.contains(e.target) && !nav.contains(e.target)) nav.classList.remove('open');
+  });
+}
+
+// Mark active nav link
+const path = location.pathname;
+document.querySelectorAll('nav a').forEach(a => {
+  if (a.getAttribute('href') && path.includes(a.getAttribute('href').replace('../', '').replace('index.html', ''))) {
+    a.classList.add('active');
+  }
+});
+
+// Drag-over styling for drop zones
+document.querySelectorAll('.drop-zone').forEach(zone => {
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); });
+});
+
+// Utility: format file size
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(2) + ' MB';
+}
+
+// Utility: format seconds as mm:ss
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  return `${m}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+}
+
+// Utility: trigger download from blob
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+// Utility: set progress bar
+function setProgress(id, pct, label) {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  wrap.classList.remove('hidden');
+  const fill = wrap.querySelector('.progress-fill');
+  const lbl = wrap.querySelector('.progress-label span:last-child');
+  if (fill) fill.style.width = pct + '%';
+  if (lbl && label) lbl.textContent = label;
+}
+
+// Expose helpers globally
+window.CH = { formatSize, formatTime, downloadBlob, setProgress };

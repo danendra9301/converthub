@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favicon Generator Online – ConvertHUB</title>
+  <meta name="description" content="Buat favicon dari gambar apapun secara online gratis. Resize ke 48x48, 32x32, atau 16x16 piksel, langsung di browser.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+  <style>
+    .favicon-previews { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end; margin: 1rem 0; }
+    .fav-box { text-align: center; }
+    .fav-box span { font-size: .75rem; color: var(--text-muted); display: block; margin-top: .4rem; }
+    .fav-box canvas { border: 1px solid var(--border); border-radius: 4px; background: #f1f5f9; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🔄 Convert<span>HUB</span></a>
+    <button class="menu-toggle" aria-label="Buka menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <nav>
+      <a href="../gambar/index.html" class="active">🖼️ Gambar</a>
+      <a href="../video/index.html">🎬 Video</a>
+      <a href="../pdf/index.html">📄 PDF</a>
+      <a href="../lainnya/index.html">⚙️ Lainnya</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="tool-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Beranda</a><span>›</span>
+      <a href="../gambar/index.html">Gambar</a><span>›</span>
+      <span>Favicon Generator</span>
+    </nav>
+    <div class="tool-header">
+      <div class="t-icon">⭐</div>
+      <h1>Favicon Generator</h1>
+      <p>Upload gambar apapun dan buat favicon dalam berbagai ukuran standar (48×48, 32×32, 16×16).</p>
+    </div>
+    <div class="steps">
+      <h3>Cara Pakai</h3>
+      <ol>
+        <li>Pilih atau seret file gambar (disarankan gambar persegi).</li>
+        <li>Pratinjau favicon dalam berbagai ukuran akan tampil otomatis.</li>
+        <li>Klik tombol unduh untuk ukuran yang diinginkan.</li>
+      </ol>
+    </div>
+    <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Area unggah gambar">
+      <input type="file" id="fileInput" accept="image/*" aria-label="Pilih gambar">
+      <div class="dz-icon">⭐</div>
+      <strong>Seret gambar ke sini</strong>
+      <p>JPG, PNG, WebP · Disarankan gambar persegi</p>
+    </div>
+    <div id="alertBox"></div>
+    <div id="resultArea" class="preview-area hidden">
+      <h3>Pratinjau Favicon</h3>
+      <div class="favicon-previews" id="faviconPreviews"></div>
+      <div class="alert alert-info mt-2">💡 Tip: Untuk website, gunakan ukuran 32×32 (favicon.ico) dan 180×180 (apple-touch-icon).</div>
+      <div class="action-row mt-2">
+        <button class="btn btn-outline" id="resetBtn">🔄 Ganti Gambar</button>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="../gambar/index.html">Gambar</a><a href="../video/index.html">Video</a>
+      <a href="../pdf/index.html">PDF</a><a href="../lainnya/index.html">Lainnya</a>
+    </div>
+    <p>© 2025 ConvertHUB · Privasi terjaga · Semua proses di browser</p>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const alertBox = document.getElementById('alertBox');
+const resultArea = document.getElementById('resultArea');
+const faviconPreviews = document.getElementById('faviconPreviews');
+const resetBtn = document.getElementById('resetBtn');
+const SIZES = [16, 32, 48, 64, 128, 180];
+
+function generateFavicon(img, size) {
+  const canvas = document.createElement('canvas');
+  canvas.width = size; canvas.height = size;
+  canvas.getContext('2d').drawImage(img, 0, 0, size, size);
+  return canvas;
+}
+
+function loadFile(file) {
+  alertBox.innerHTML = '';
+  if (!file || !file.type.match('image/')) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Format tidak didukung.</div>'; return; }
+  if (file.size > 20 * 1024 * 1024) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Ukuran file terlalu besar.</div>'; return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      faviconPreviews.innerHTML = '';
+      SIZES.forEach(size => {
+        const canvas = generateFavicon(img, size);
+        const box = document.createElement('div');
+        box.className = 'fav-box';
+        box.appendChild(canvas);
+        const label = document.createElement('span');
+        label.textContent = `${size}×${size}`;
+        box.appendChild(label);
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-outline mt-1';
+        btn.style.cssText = 'padding:.3rem .6rem;font-size:.75rem';
+        btn.textContent = '⬇️ Unduh';
+        btn.addEventListener('click', () => {
+          canvas.toBlob(blob => CH.downloadBlob(blob, `favicon-${size}x${size}.png`), 'image/png');
+        });
+        box.appendChild(btn);
+        faviconPreviews.appendChild(box);
+      });
+      resultArea.classList.remove('hidden');
+      dropZone.classList.add('hidden');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); loadFile(e.dataTransfer.files[0]); });
+dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+resetBtn.addEventListener('click', () => { fileInput.value = ''; alertBox.innerHTML = ''; resultArea.classList.add('hidden'); dropZone.classList.remove('hidden'); });
+</script>
+</body>
+</html>

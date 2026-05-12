@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GIF Maker Online – ConvertHUB</title>
+  <meta name="description" content="Buat animasi GIF dari video pendek atau rangkaian gambar secara gratis online. Langsung di browser menggunakan ffmpeg.wasm.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🔄 Convert<span>HUB</span></a>
+    <button class="menu-toggle" aria-label="Buka menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <nav>
+      <a href="../gambar/index.html">🖼️ Gambar</a>
+      <a href="../video/index.html" class="active">🎬 Video</a>
+      <a href="../pdf/index.html">📄 PDF</a>
+      <a href="../lainnya/index.html">⚙️ Lainnya</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="tool-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Beranda</a><span>›</span>
+      <a href="../video/index.html">Video</a><span>›</span>
+      <span>GIF Maker</span>
+    </nav>
+    <div class="tool-header">
+      <div class="t-icon">🎞️</div>
+      <h1>GIF Maker</h1>
+      <p>Ubah video pendek menjadi animasi GIF yang bisa dibagikan. Diproses langsung di browser.</p>
+    </div>
+    <div class="alert alert-warning">⚠️ <strong>Tips:</strong> GIF menghasilkan file besar. Gunakan video pendek (maks. 10 detik) dan resolusi kecil untuk hasil terbaik. Proses bisa memakan waktu 1–3 menit.</div>
+    <div class="alert alert-info">⏳ Tool ini menggunakan ffmpeg.wasm — loading awal ~30 detik.</div>
+    <div class="steps">
+      <h3>Cara Pakai</h3>
+      <ol>
+        <li>Pilih file video pendek MP4 (disarankan &lt;30 detik, &lt;50MB).</li>
+        <li>Atur FPS dan lebar GIF sesuai kebutuhan.</li>
+        <li>Klik "Buat GIF" dan tunggu prosesnya (bisa memakan beberapa menit).</li>
+      </ol>
+    </div>
+    <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Area unggah video">
+      <input type="file" id="fileInput" accept="video/mp4,.mp4" aria-label="Pilih file MP4">
+      <div class="dz-icon">🎞️</div>
+      <strong>Seret file MP4 ke sini</strong>
+      <p>MP4 · Disarankan &lt;30 detik dan &lt;50MB</p>
+    </div>
+    <div id="alertBox"></div>
+    <div class="preview-area hidden" id="previewArea">
+      <h3>File Dipilih</h3>
+      <div class="video-player-wrap">
+        <video id="videoPreview" controls aria-label="Pratinjau video"></video>
+      </div>
+      <div class="file-info" id="fileInfo"></div>
+      <div class="controls" style="margin-top:1rem">
+        <div class="control-group">
+          <label for="fpsInput">FPS (frame per detik): <strong id="fpsVal">10</strong></label>
+          <input type="range" id="fpsInput" min="5" max="25" value="10">
+        </div>
+        <div class="control-group">
+          <label for="widthInput">Lebar GIF (px)</label>
+          <input type="number" id="widthInput" value="480" min="100" max="800" placeholder="480">
+        </div>
+        <div class="control-group">
+          <label for="startInput">Mulai dari (detik)</label>
+          <input type="number" id="startInput" value="0" min="0" step="0.1" placeholder="0">
+        </div>
+        <div class="control-group">
+          <label for="durationInput">Durasi (detik, maks. 10)</label>
+          <input type="number" id="durationInput" value="5" min="1" max="10" step="0.5" placeholder="5">
+        </div>
+        <button class="btn btn-primary" id="convertBtn">🎞️ Buat GIF</button>
+        <button class="btn btn-outline" id="resetBtn">🔄 Ganti File</button>
+      </div>
+    </div>
+    <div class="progress-wrap hidden" id="progressWrap">
+      <div class="progress-label"><span id="progressLabel">Memproses...</span><span id="progressText">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="download-card hidden" id="downloadCard">
+      <div class="download-info">
+        <strong>✅ GIF berhasil dibuat!</strong>
+        <span id="downloadSize"></span>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <a id="downloadBtn" class="btn btn-success" download="output.gif">⬇️ Unduh GIF</a>
+      </div>
+    </div>
+    <div id="gifPreviewArea" class="hidden" style="text-align:center;margin-top:1rem">
+      <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:.5rem">Pratinjau GIF:</p>
+      <img id="gifPreview" alt="Pratinjau GIF hasil" style="max-width:100%;border:1px solid var(--border);border-radius:8px">
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="../gambar/index.html">Gambar</a><a href="../video/index.html">Video</a>
+      <a href="../pdf/index.html">PDF</a><a href="../lainnya/index.html">Lainnya</a>
+    </div>
+    <p>© 2025 ConvertHUB · Privasi terjaga · Semua proses di browser</p>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const alertBox = document.getElementById('alertBox');
+const previewArea = document.getElementById('previewArea');
+const videoPreview = document.getElementById('videoPreview');
+const fileInfo = document.getElementById('fileInfo');
+const fpsInput = document.getElementById('fpsInput');
+const fpsVal = document.getElementById('fpsVal');
+const widthInput = document.getElementById('widthInput');
+const startInput = document.getElementById('startInput');
+const durationInput = document.getElementById('durationInput');
+const convertBtn = document.getElementById('convertBtn');
+const resetBtn = document.getElementById('resetBtn');
+const progressWrap = document.getElementById('progressWrap');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const progressLabel = document.getElementById('progressLabel');
+const downloadCard = document.getElementById('downloadCard');
+const downloadBtn = document.getElementById('downloadBtn');
+const downloadSize = document.getElementById('downloadSize');
+const gifPreviewArea = document.getElementById('gifPreviewArea');
+const gifPreview = document.getElementById('gifPreview');
+let currentFile = null, ffmpegLoaded = false, ffmpeg = null;
+
+fpsInput.addEventListener('input', () => fpsVal.textContent = fpsInput.value);
+
+function setProgress(pct, label) { progressWrap.classList.remove('hidden'); progressFill.style.width = pct + '%'; progressText.textContent = pct + '%'; if (label) progressLabel.textContent = label; }
+
+async function loadFFmpeg() {
+  if (ffmpegLoaded) return true;
+  setProgress(5, 'Memuat ffmpeg.wasm...');
+  try {
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    ffmpeg = createFFmpeg({ log: false, progress: ({ ratio }) => setProgress(Math.min(Math.round(ratio * 50) + 5, 55), 'Memuat ffmpeg.wasm...') });
+    await ffmpeg.load(); ffmpegLoaded = true; window._fetchFile = fetchFile; return true;
+  } catch(e) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Gagal memuat ffmpeg.wasm.</div>'; progressWrap.classList.add('hidden'); return false; }
+}
+
+function loadFile(file) {
+  alertBox.innerHTML = '';
+  if (!file || !file.type.match('video/mp4')) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Harap unggah file MP4.</div>'; return; }
+  currentFile = file;
+  videoPreview.src = URL.createObjectURL(file);
+  videoPreview.onloadedmetadata = () => { startInput.max = Math.max(0, videoPreview.duration - 1); };
+  fileInfo.innerHTML = `<span class="file-info-item">📁 ${file.name}</span><span class="file-info-item">💾 ${CH.formatSize(file.size)}</span>`;
+  dropZone.classList.add('hidden'); previewArea.classList.remove('hidden'); downloadCard.classList.add('hidden'); gifPreviewArea.classList.add('hidden');
+}
+
+convertBtn.addEventListener('click', async () => {
+  if (!currentFile) return;
+  const dur = Math.min(parseFloat(durationInput.value) || 5, 10);
+  const ss = parseFloat(startInput.value) || 0;
+  const fps = parseInt(fpsInput.value) || 10;
+  const w = parseInt(widthInput.value) || 480;
+  if (w > 800) { alertBox.innerHTML = '<div class="alert alert-warning">⚠️ Lebar maksimal 800px untuk performa optimal.</div>'; return; }
+  convertBtn.disabled = true; convertBtn.innerHTML = '<span class="spinner"></span> Membuat GIF...';
+  const ok = await loadFFmpeg();
+  if (!ok) { convertBtn.disabled = false; convertBtn.innerHTML = '🎞️ Buat GIF'; return; }
+  setProgress(60, 'Membuat GIF (mungkin lambat)...');
+  try {
+    ffmpeg.FS('writeFile', 'input.mp4', await window._fetchFile(currentFile));
+    ffmpeg.setProgress(({ ratio }) => setProgress(Math.round(ratio * 35) + 60, 'Membuat GIF...'));
+    await ffmpeg.run('-ss', String(ss), '-t', String(dur), '-i', 'input.mp4', '-vf', `fps=${fps},scale=${w}:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse`, '-loop', '0', 'output.gif');
+    const data = ffmpeg.FS('readFile', 'output.gif');
+    const blob = new Blob([data.buffer], { type: 'image/gif' });
+    const url = URL.createObjectURL(blob);
+    downloadBtn.href = url;
+    downloadBtn.download = currentFile.name.replace('.mp4', '') + '.gif';
+    downloadSize.textContent = `GIF · ${CH.formatSize(blob.size)} · ${fps}fps · ${w}px lebar`;
+    gifPreview.src = url; gifPreviewArea.classList.remove('hidden');
+    setProgress(100, 'Selesai!'); downloadCard.classList.remove('hidden');
+    try { ffmpeg.FS('unlink', 'input.mp4'); ffmpeg.FS('unlink', 'output.gif'); } catch(e) {}
+  } catch(e) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Gagal membuat GIF. Coba video lebih pendek atau resolusi lebih kecil.</div>'; progressWrap.classList.add('hidden'); }
+  convertBtn.disabled = false; convertBtn.innerHTML = '🎞️ Buat GIF';
+});
+
+fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); loadFile(e.dataTransfer.files[0]); });
+dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+resetBtn.addEventListener('click', () => { fileInput.value = ''; alertBox.innerHTML = ''; currentFile = null; previewArea.classList.add('hidden'); downloadCard.classList.add('hidden'); progressWrap.classList.add('hidden'); gifPreviewArea.classList.add('hidden'); dropZone.classList.remove('hidden'); });
+</script>
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+</body>
+</html>

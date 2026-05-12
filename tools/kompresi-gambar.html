@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kompresi Gambar Online – ConvertHUB</title>
+  <meta name="description" content="Kompres ukuran file gambar JPG, PNG, WebP secara gratis online tanpa kehilangan kualitas. Langsung di browser, file tidak di-upload.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🔄 Convert<span>HUB</span></a>
+    <button class="menu-toggle" aria-label="Buka menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <nav>
+      <a href="../gambar/index.html" class="active">🖼️ Gambar</a>
+      <a href="../video/index.html">🎬 Video</a>
+      <a href="../pdf/index.html">📄 PDF</a>
+      <a href="../lainnya/index.html">⚙️ Lainnya</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="tool-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Beranda</a><span>›</span>
+      <a href="../gambar/index.html">Gambar</a><span>›</span>
+      <span>Kompresi Gambar</span>
+    </nav>
+    <div class="tool-header">
+      <div class="t-icon">🗜️</div>
+      <h1>Kompresi Gambar</h1>
+      <p>Kurangi ukuran file gambar JPG, PNG, atau WebP tanpa kehilangan kualitas yang berarti.</p>
+    </div>
+    <div class="steps">
+      <h3>Cara Pakai</h3>
+      <ol>
+        <li>Pilih atau seret file gambar (JPG/PNG/WebP, maks. 20MB).</li>
+        <li>Atur level kualitas menggunakan slider.</li>
+        <li>Klik "Kompres" dan unduh hasilnya.</li>
+      </ol>
+    </div>
+    <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Area unggah gambar">
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" aria-label="Pilih gambar">
+      <div class="dz-icon">🗜️</div>
+      <strong>Seret gambar ke sini</strong>
+      <p>JPG, PNG, WebP · Maks. 20MB</p>
+    </div>
+    <div class="controls" id="controls" style="display:none">
+      <div class="control-group">
+        <label for="qualitySlider">Kualitas: <strong id="qualityVal">80</strong>%</label>
+        <input type="range" id="qualitySlider" min="10" max="100" value="80">
+      </div>
+      <div class="control-group" style="flex:0">
+        <label>Format output</label>
+        <select id="formatSelect">
+          <option value="same">Sama dengan input</option>
+          <option value="image/jpeg">JPG</option>
+          <option value="image/png">PNG</option>
+          <option value="image/webp">WebP</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" id="convertBtn">🗜️ Kompres</button>
+    </div>
+    <div id="alertBox"></div>
+    <div id="previewArea" class="preview-area hidden">
+      <h3>Hasil Kompresi</h3>
+      <div class="preview-grid">
+        <div class="preview-box"><span>Asli</span><img id="previewBefore" alt="Gambar asli"></div>
+        <div class="preview-box"><span>Dikompres</span><img id="previewAfter" alt="Hasil kompresi"></div>
+      </div>
+      <div class="file-info" id="fileInfo"></div>
+    </div>
+    <div class="download-card hidden" id="downloadCard">
+      <div class="download-info">
+        <strong>✅ Kompresi selesai!</strong>
+        <span id="downloadSize"></span>
+      </div>
+      <a id="downloadBtn" class="btn btn-success">⬇️ Unduh</a>
+    </div>
+    <div class="action-row">
+      <button class="btn btn-outline" id="resetBtn" style="display:none">🔄 Kompres Lagi</button>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="../gambar/index.html">Gambar</a><a href="../video/index.html">Video</a>
+      <a href="../pdf/index.html">PDF</a><a href="../lainnya/index.html">Lainnya</a>
+    </div>
+    <p>© 2025 ConvertHUB · Privasi terjaga · Semua proses di browser</p>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const controls = document.getElementById('controls');
+const qualitySlider = document.getElementById('qualitySlider');
+const qualityVal = document.getElementById('qualityVal');
+const formatSelect = document.getElementById('formatSelect');
+const convertBtn = document.getElementById('convertBtn');
+const alertBox = document.getElementById('alertBox');
+const previewArea = document.getElementById('previewArea');
+const previewBefore = document.getElementById('previewBefore');
+const previewAfter = document.getElementById('previewAfter');
+const fileInfo = document.getElementById('fileInfo');
+const downloadCard = document.getElementById('downloadCard');
+const downloadBtn = document.getElementById('downloadBtn');
+const downloadSize = document.getElementById('downloadSize');
+const resetBtn = document.getElementById('resetBtn');
+let currentFile = null, currentImg = null;
+
+qualitySlider.addEventListener('input', () => qualityVal.textContent = qualitySlider.value);
+
+function loadFile(file) {
+  alertBox.innerHTML = '';
+  if (!file || !file.type.match('image/(jpeg|png|webp)')) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Format tidak didukung. Gunakan JPG, PNG, atau WebP.</div>'; return; }
+  if (file.size > 20 * 1024 * 1024) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Ukuran file terlalu besar. Maksimal 20MB.</div>'; return; }
+  currentFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => { currentImg = img; previewBefore.src = e.target.result; controls.style.display = 'flex'; };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+convertBtn.addEventListener('click', () => {
+  if (!currentImg) return;
+  const quality = qualitySlider.value / 100;
+  let mime = formatSelect.value === 'same' ? currentFile.type : formatSelect.value;
+  if (mime === 'image/png') quality_val = 1;
+  const canvas = document.createElement('canvas');
+  canvas.width = currentImg.width; canvas.height = currentImg.height;
+  canvas.getContext('2d').drawImage(currentImg, 0, 0);
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    previewAfter.src = url;
+    const ext = mime.split('/')[1];
+    const saved = ((1 - blob.size / currentFile.size) * 100).toFixed(1);
+    downloadBtn.href = url;
+    downloadBtn.download = currentFile.name.replace(/\.[^.]+$/, '') + '_compressed.' + ext;
+    downloadSize.textContent = `${CH.formatSize(currentFile.size)} → ${CH.formatSize(blob.size)} (hemat ${saved}%)`;
+    fileInfo.innerHTML = `<span class="file-info-item">📁 ${currentFile.name}</span><span class="file-info-item">💾 Dihemat: ${saved}%</span><span class="file-info-item">📐 ${currentImg.width}×${currentImg.height}px</span>`;
+    previewArea.classList.remove('hidden'); downloadCard.classList.remove('hidden'); resetBtn.style.display = 'inline-flex';
+  }, mime, quality);
+});
+
+fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); loadFile(e.dataTransfer.files[0]); });
+dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+resetBtn.addEventListener('click', () => { fileInput.value = ''; controls.style.display = 'none'; previewArea.classList.add('hidden'); downloadCard.classList.add('hidden'); resetBtn.style.display = 'none'; currentFile = null; currentImg = null; alertBox.innerHTML = ''; });
+</script>
+</body>
+</html>

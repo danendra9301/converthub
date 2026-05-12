@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PNG ke WebP Online – ConvertHUB</title>
+  <meta name="description" content="Konversi PNG ke format WebP modern yang lebih kecil ukurannya. Gratis, langsung di browser tanpa upload ke server.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🔄 Convert<span>HUB</span></a>
+    <button class="menu-toggle" aria-label="Buka menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <nav>
+      <a href="../gambar/index.html" class="active">🖼️ Gambar</a>
+      <a href="../video/index.html">🎬 Video</a>
+      <a href="../pdf/index.html">📄 PDF</a>
+      <a href="../lainnya/index.html">⚙️ Lainnya</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="tool-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Beranda</a><span>›</span>
+      <a href="../gambar/index.html">Gambar</a><span>›</span>
+      <span>PNG ke WebP</span>
+    </nav>
+    <div class="tool-header">
+      <div class="t-icon">🔄</div>
+      <h1>PNG ke WebP</h1>
+      <p>Konversi PNG ke format WebP modern dengan ukuran file lebih kecil dan kualitas terjaga.</p>
+    </div>
+    <div class="steps">
+      <h3>Cara Pakai</h3>
+      <ol>
+        <li>Seret atau pilih file PNG (maks. 20MB).</li>
+        <li>Atur kualitas WebP menggunakan slider (default 85%).</li>
+        <li>Klik "Konversi" lalu unduh hasilnya.</li>
+      </ol>
+    </div>
+    <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Area unggah file PNG">
+      <input type="file" id="fileInput" accept=".png,image/png" aria-label="Pilih file PNG">
+      <div class="dz-icon">🖼️</div>
+      <strong>Seret file PNG ke sini</strong>
+      <p>atau klik untuk memilih file · Maks. 20MB</p>
+    </div>
+    <div class="controls" id="controls" style="display:none">
+      <div class="control-group">
+        <label for="qualitySlider">Kualitas WebP: <strong id="qualityVal">85</strong>%</label>
+        <input type="range" id="qualitySlider" min="10" max="100" value="85">
+      </div>
+      <button class="btn btn-primary" id="convertBtn">🔄 Konversi ke WebP</button>
+    </div>
+    <div id="alertBox"></div>
+    <div id="previewArea" class="preview-area hidden">
+      <h3>Pratinjau</h3>
+      <div class="preview-grid">
+        <div class="preview-box"><span>Sebelum (PNG)</span><img id="previewBefore" alt="Gambar PNG asli"></div>
+        <div class="preview-box"><span>Sesudah (WebP)</span><img id="previewAfter" alt="Hasil WebP"></div>
+      </div>
+      <div class="file-info" id="fileInfo"></div>
+    </div>
+    <div class="download-card hidden" id="downloadCard">
+      <div class="download-info">
+        <strong>✅ Konversi selesai!</strong>
+        <span id="downloadSize">File siap diunduh</span>
+      </div>
+      <a id="downloadBtn" class="btn btn-success" download="output.webp">⬇️ Unduh WebP</a>
+    </div>
+    <div class="action-row">
+      <button class="btn btn-outline" id="resetBtn" style="display:none">🔄 Konversi Lagi</button>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="../gambar/index.html">Gambar</a><a href="../video/index.html">Video</a>
+      <a href="../pdf/index.html">PDF</a><a href="../lainnya/index.html">Lainnya</a>
+    </div>
+    <p>© 2025 ConvertHUB · Privasi terjaga · Semua proses di browser</p>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const controls = document.getElementById('controls');
+const qualitySlider = document.getElementById('qualitySlider');
+const qualityVal = document.getElementById('qualityVal');
+const convertBtn = document.getElementById('convertBtn');
+const alertBox = document.getElementById('alertBox');
+const previewArea = document.getElementById('previewArea');
+const previewBefore = document.getElementById('previewBefore');
+const previewAfter = document.getElementById('previewAfter');
+const fileInfo = document.getElementById('fileInfo');
+const downloadCard = document.getElementById('downloadCard');
+const downloadBtn = document.getElementById('downloadBtn');
+const downloadSize = document.getElementById('downloadSize');
+const resetBtn = document.getElementById('resetBtn');
+let currentFile = null, currentImg = null;
+
+qualitySlider.addEventListener('input', () => qualityVal.textContent = qualitySlider.value);
+
+function loadFile(file) {
+  alertBox.innerHTML = '';
+  if (!file || !file.type.match('image/png')) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Harap unggah file PNG.</div>'; return; }
+  if (file.size > 20 * 1024 * 1024) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Ukuran file terlalu besar. Maksimal 20MB.</div>'; return; }
+  currentFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => { currentImg = img; previewBefore.src = e.target.result; controls.style.display = 'flex'; };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+convertBtn.addEventListener('click', () => {
+  if (!currentImg) return;
+  const quality = qualitySlider.value / 100;
+  const canvas = document.createElement('canvas');
+  canvas.width = currentImg.width; canvas.height = currentImg.height;
+  canvas.getContext('2d').drawImage(currentImg, 0, 0);
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    previewAfter.src = url;
+    downloadBtn.href = url;
+    downloadBtn.download = currentFile.name.replace(/\.png$/i, '') + '.webp';
+    downloadSize.textContent = `WebP · ${CH.formatSize(blob.size)} · ${currentImg.width}×${currentImg.height}px`;
+    fileInfo.innerHTML = `<span class="file-info-item">📁 ${currentFile.name}</span><span class="file-info-item">📏 ${CH.formatSize(currentFile.size)} → ${CH.formatSize(blob.size)}</span><span class="file-info-item">📐 ${currentImg.width}×${currentImg.height}px</span>`;
+    previewArea.classList.remove('hidden'); downloadCard.classList.remove('hidden'); resetBtn.style.display = 'inline-flex';
+  }, 'image/webp', quality);
+});
+
+fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); loadFile(e.dataTransfer.files[0]); });
+dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+resetBtn.addEventListener('click', () => { fileInput.value = ''; controls.style.display = 'none'; previewArea.classList.add('hidden'); downloadCard.classList.add('hidden'); resetBtn.style.display = 'none'; currentFile = null; currentImg = null; alertBox.innerHTML = ''; });
+</script>
+</body>
+</html>

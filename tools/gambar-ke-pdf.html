@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gambar ke PDF Online – ConvertHUB</title>
+  <meta name="description" content="Gabungkan satu atau beberapa gambar JPG/PNG menjadi satu file PDF secara gratis online, langsung di browser.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+  <style>
+    .img-list { display: flex; flex-wrap: wrap; gap: .75rem; margin: 1rem 0; }
+    .img-thumb { position: relative; width: 100px; }
+    .img-thumb img { width: 100px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); }
+    .img-thumb .remove-btn { position: absolute; top: -6px; right: -6px; background: #ef4444; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: .7rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .img-thumb span { font-size: .7rem; color: var(--text-muted); display: block; text-align: center; margin-top: .25rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🔄 Convert<span>HUB</span></a>
+    <button class="menu-toggle" aria-label="Buka menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <nav>
+      <a href="../gambar/index.html">🖼️ Gambar</a>
+      <a href="../video/index.html">🎬 Video</a>
+      <a href="../pdf/index.html" class="active">📄 PDF</a>
+      <a href="../lainnya/index.html">⚙️ Lainnya</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="tool-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Beranda</a><span>›</span>
+      <a href="../pdf/index.html">PDF</a><span>›</span>
+      <span>Gambar ke PDF</span>
+    </nav>
+    <div class="tool-header">
+      <div class="t-icon">📄</div>
+      <h1>Gambar ke PDF</h1>
+      <p>Gabungkan satu atau banyak gambar JPG/PNG menjadi satu file PDF. Urutan sesuai urutan upload.</p>
+    </div>
+    <div class="steps">
+      <h3>Cara Pakai</h3>
+      <ol>
+        <li>Pilih satu atau beberapa gambar JPG/PNG (bisa pilih banyak sekaligus).</li>
+        <li>Atur ukuran halaman dan orientasi PDF.</li>
+        <li>Klik "Buat PDF" dan unduh hasilnya.</li>
+      </ol>
+    </div>
+    <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Area unggah gambar">
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple aria-label="Pilih gambar">
+      <div class="dz-icon">📄</div>
+      <strong>Seret gambar ke sini (bisa banyak)</strong>
+      <p>JPG, PNG, WebP · Maks. 20MB per file</p>
+    </div>
+    <div id="alertBox"></div>
+    <div id="imageList" class="img-list"></div>
+    <div class="controls" id="controls" style="display:none">
+      <div class="control-group">
+        <label for="pageSize">Ukuran Halaman</label>
+        <select id="pageSize">
+          <option value="a4">A4 (210×297mm)</option>
+          <option value="letter">Letter (216×279mm)</option>
+          <option value="a5">A5 (148×210mm)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="orientation">Orientasi</label>
+        <select id="orientation">
+          <option value="portrait">Portrait</option>
+          <option value="landscape">Landscape</option>
+        </select>
+      </div>
+      <div class="control-group" style="flex:0;justify-content:flex-end">
+        <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer">
+          <input type="checkbox" id="fitPage" checked> Gambar penuh halaman
+        </label>
+      </div>
+      <button class="btn btn-primary" id="convertBtn">📄 Buat PDF</button>
+    </div>
+    <div class="download-card hidden" id="downloadCard">
+      <div class="download-info">
+        <strong>✅ PDF berhasil dibuat!</strong>
+        <span id="downloadSize"></span>
+      </div>
+      <a id="downloadBtn" class="btn btn-success" download="converthub-images.pdf">⬇️ Unduh PDF</a>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="../gambar/index.html">Gambar</a><a href="../video/index.html">Video</a>
+      <a href="../pdf/index.html">PDF</a><a href="../lainnya/index.html">Lainnya</a>
+    </div>
+    <p>© 2025 ConvertHUB · Privasi terjaga · Semua proses di browser</p>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const alertBox = document.getElementById('alertBox');
+const imageList = document.getElementById('imageList');
+const controls = document.getElementById('controls');
+const convertBtn = document.getElementById('convertBtn');
+const downloadCard = document.getElementById('downloadCard');
+const downloadBtn = document.getElementById('downloadBtn');
+const downloadSize = document.getElementById('downloadSize');
+let files = [];
+
+function renderList() {
+  imageList.innerHTML = '';
+  files.forEach((f, i) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'img-thumb';
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(f);
+    img.alt = f.name;
+    const rm = document.createElement('button');
+    rm.className = 'remove-btn'; rm.innerHTML = '×'; rm.title = 'Hapus';
+    rm.addEventListener('click', () => { files.splice(i, 1); renderList(); if (!files.length) controls.style.display = 'none'; });
+    const lbl = document.createElement('span');
+    lbl.textContent = f.name;
+    thumb.append(img, rm, lbl);
+    imageList.appendChild(thumb);
+  });
+  controls.style.display = files.length ? 'flex' : 'none';
+}
+
+function addFiles(newFiles) {
+  alertBox.innerHTML = '';
+  Array.from(newFiles).forEach(f => {
+    if (!f.type.match('image/(jpeg|png|webp)')) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Hanya JPG, PNG, WebP yang didukung.</div>'; return; }
+    if (f.size > 20 * 1024 * 1024) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ File ' + f.name + ' terlalu besar (maks. 20MB).</div>'; return; }
+    files.push(f);
+  });
+  renderList();
+}
+
+convertBtn.addEventListener('click', async () => {
+  if (!files.length) return;
+  convertBtn.innerHTML = '<span class="spinner"></span> Membuat PDF...'; convertBtn.disabled = true;
+  const ps = document.getElementById('pageSize').value;
+  const ori = document.getElementById('orientation').value;
+  const fitPage = document.getElementById('fitPage').checked;
+  const doc = new jsPDF({ orientation: ori, unit: 'mm', format: ps });
+  const pw = doc.internal.pageSize.getWidth();
+  const ph = doc.internal.pageSize.getHeight();
+  for (let i = 0; i < files.length; i++) {
+    if (i > 0) doc.addPage();
+    await new Promise(res => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          const aspect = img.width / img.height;
+          let iw = pw - 20, ih = iw / aspect;
+          if (fitPage) { iw = pw; ih = ph; }
+          else if (ih > ph - 20) { ih = ph - 20; iw = ih * aspect; }
+          const x = (pw - iw) / 2, y = fitPage ? 0 : (ph - ih) / 2;
+          const fmt = files[i].type === 'image/png' ? 'PNG' : 'JPEG';
+          doc.addImage(e.target.result, fmt, x, y, iw, ih);
+          res();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(files[i]);
+    });
+  }
+  const pdfBlob = doc.output('blob');
+  downloadBtn.href = URL.createObjectURL(pdfBlob);
+  downloadSize.textContent = `${files.length} halaman · ${CH.formatSize(pdfBlob.size)}`;
+  downloadCard.classList.remove('hidden');
+  convertBtn.innerHTML = '📄 Buat PDF'; convertBtn.disabled = false;
+});
+
+fileInput.addEventListener('change', e => addFiles(e.target.files));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); addFiles(e.dataTransfer.files); });
+dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+</script>
+</body>
+</html>

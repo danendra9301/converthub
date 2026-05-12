@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trim Video Online – ConvertHUB</title>
+  <meta name="description" content="Potong (trim) video online gratis. Pilih titik awal dan akhir video, langsung di browser menggunakan ffmpeg.wasm tanpa upload ke server.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+  <style>
+    .time-display { font-size: 1.1rem; font-weight: 700; color: var(--primary); min-width: 55px; }
+    .trim-info { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: .75rem 1rem; font-size: .875rem; color: var(--text-muted); display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">🔄 Convert<span>HUB</span></a>
+    <button class="menu-toggle" aria-label="Buka menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <nav>
+      <a href="../gambar/index.html">🖼️ Gambar</a>
+      <a href="../video/index.html" class="active">🎬 Video</a>
+      <a href="../pdf/index.html">📄 PDF</a>
+      <a href="../lainnya/index.html">⚙️ Lainnya</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="tool-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Beranda</a><span>›</span>
+      <a href="../video/index.html">Video</a><span>›</span>
+      <span>Trim Video</span>
+    </nav>
+    <div class="tool-header">
+      <div class="t-icon">✂️</div>
+      <h1>Trim Video</h1>
+      <p>Potong bagian awal dan akhir video yang tidak dibutuhkan. Diproses langsung di browser.</p>
+    </div>
+    <div class="alert alert-info">⏳ Tool ini menggunakan ffmpeg.wasm — loading awal ~30 detik. Disarankan untuk video pendek (&lt;60 detik).</div>
+    <div class="steps">
+      <h3>Cara Pakai</h3>
+      <ol>
+        <li>Pilih file video MP4 (maks. 200MB).</li>
+        <li>Geser slider untuk menentukan titik awal dan akhir clip.</li>
+        <li>Klik "Trim & Unduh" untuk memproses.</li>
+      </ol>
+    </div>
+    <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Area unggah video">
+      <input type="file" id="fileInput" accept="video/mp4,.mp4" aria-label="Pilih file MP4">
+      <div class="dz-icon">✂️</div>
+      <strong>Seret file MP4 ke sini</strong>
+      <p>MP4 · Maks. 200MB</p>
+    </div>
+    <div id="alertBox"></div>
+    <div class="preview-area hidden" id="previewArea">
+      <h3>Atur Titik Potong</h3>
+      <div class="video-player-wrap">
+        <video id="videoPreview" controls aria-label="Pratinjau video"></video>
+      </div>
+      <div class="controls" style="margin-top:1rem;flex-direction:column">
+        <div class="range-wrap">
+          <label style="font-size:.85rem;font-weight:600;color:var(--text-muted)">Titik Awal</label>
+          <div class="range-row">
+            <input type="range" id="startSlider" min="0" max="100" value="0" step="0.1" aria-label="Titik awal trim">
+            <span class="time-display" id="startDisplay">0:00</span>
+          </div>
+        </div>
+        <div class="range-wrap">
+          <label style="font-size:.85rem;font-weight:600;color:var(--text-muted)">Titik Akhir</label>
+          <div class="range-row">
+            <input type="range" id="endSlider" min="0" max="100" value="100" step="0.1" aria-label="Titik akhir trim">
+            <span class="time-display" id="endDisplay">0:00</span>
+          </div>
+        </div>
+        <div class="trim-info" id="trimInfo">
+          <span>⏱ Durasi clip: <strong id="clipDuration">-</strong></span>
+          <span>📁 File asli: <strong id="origSize">-</strong></span>
+        </div>
+        <div class="action-row">
+          <button class="btn btn-primary" id="convertBtn">✂️ Trim & Unduh</button>
+          <button class="btn btn-outline" id="resetBtn">🔄 Ganti File</button>
+        </div>
+      </div>
+    </div>
+    <div class="progress-wrap hidden" id="progressWrap">
+      <div class="progress-label"><span id="progressLabel">Memproses...</span><span id="progressText">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="download-card hidden" id="downloadCard">
+      <div class="download-info">
+        <strong>✅ Trim selesai!</strong>
+        <span id="downloadSize"></span>
+      </div>
+      <a id="downloadBtn" class="btn btn-success" download="trimmed.mp4">⬇️ Unduh Video</a>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="../gambar/index.html">Gambar</a><a href="../video/index.html">Video</a>
+      <a href="../pdf/index.html">PDF</a><a href="../lainnya/index.html">Lainnya</a>
+    </div>
+    <p>© 2025 ConvertHUB · Privasi terjaga · Semua proses di browser</p>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const alertBox = document.getElementById('alertBox');
+const previewArea = document.getElementById('previewArea');
+const videoPreview = document.getElementById('videoPreview');
+const startSlider = document.getElementById('startSlider');
+const endSlider = document.getElementById('endSlider');
+const startDisplay = document.getElementById('startDisplay');
+const endDisplay = document.getElementById('endDisplay');
+const clipDuration = document.getElementById('clipDuration');
+const origSize = document.getElementById('origSize');
+const convertBtn = document.getElementById('convertBtn');
+const resetBtn = document.getElementById('resetBtn');
+const progressWrap = document.getElementById('progressWrap');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const progressLabel = document.getElementById('progressLabel');
+const downloadCard = document.getElementById('downloadCard');
+const downloadBtn = document.getElementById('downloadBtn');
+const downloadSize = document.getElementById('downloadSize');
+let currentFile = null, duration = 0, ffmpegLoaded = false, ffmpeg = null;
+
+function setProgress(pct, label) { progressWrap.classList.remove('hidden'); progressFill.style.width = pct + '%'; progressText.textContent = pct + '%'; if (label) progressLabel.textContent = label; }
+
+function updateUI() {
+  const s = (parseFloat(startSlider.value) / 100) * duration;
+  const e = (parseFloat(endSlider.value) / 100) * duration;
+  startDisplay.textContent = CH.formatTime(s);
+  endDisplay.textContent = CH.formatTime(e);
+  clipDuration.textContent = CH.formatTime(Math.max(0, e - s));
+  if (parseFloat(startSlider.value) >= parseFloat(endSlider.value)) endSlider.value = Math.min(parseFloat(startSlider.value) + 1, 100);
+}
+
+startSlider.addEventListener('input', () => { if (parseFloat(startSlider.value) >= parseFloat(endSlider.value)) startSlider.value = parseFloat(endSlider.value) - 1; updateUI(); });
+endSlider.addEventListener('input', () => { if (parseFloat(endSlider.value) <= parseFloat(startSlider.value)) endSlider.value = parseFloat(startSlider.value) + 1; updateUI(); });
+
+function loadFile(file) {
+  alertBox.innerHTML = '';
+  if (!file || !file.type.match('video/mp4')) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Harap unggah file MP4.</div>'; return; }
+  if (file.size > 200 * 1024 * 1024) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ File terlalu besar. Maksimal 200MB.</div>'; return; }
+  currentFile = file;
+  const url = URL.createObjectURL(file);
+  videoPreview.src = url;
+  videoPreview.onloadedmetadata = () => {
+    duration = videoPreview.duration;
+    startSlider.value = 0; endSlider.value = 100;
+    origSize.textContent = CH.formatSize(file.size);
+    updateUI();
+  };
+  dropZone.classList.add('hidden'); previewArea.classList.remove('hidden'); downloadCard.classList.add('hidden');
+}
+
+async function loadFFmpeg() {
+  if (ffmpegLoaded) return true;
+  setProgress(5, 'Memuat ffmpeg.wasm...');
+  try {
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    ffmpeg = createFFmpeg({ log: false, progress: ({ ratio }) => setProgress(Math.min(Math.round(ratio * 50) + 5, 55), 'Memuat ffmpeg.wasm...') });
+    await ffmpeg.load(); ffmpegLoaded = true; window._fetchFile = fetchFile; return true;
+  } catch(e) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Gagal memuat ffmpeg.wasm.</div>'; progressWrap.classList.add('hidden'); return false; }
+}
+
+convertBtn.addEventListener('click', async () => {
+  if (!currentFile || !duration) return;
+  const startSec = (parseFloat(startSlider.value) / 100) * duration;
+  const endSec = (parseFloat(endSlider.value) / 100) * duration;
+  if (endSec - startSec < 0.5) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Durasi clip minimal 0.5 detik.</div>'; return; }
+  convertBtn.disabled = true; convertBtn.innerHTML = '<span class="spinner"></span> Memproses...';
+  const ok = await loadFFmpeg();
+  if (!ok) { convertBtn.disabled = false; convertBtn.innerHTML = '✂️ Trim & Unduh'; return; }
+  setProgress(60, 'Memotong video...');
+  try {
+    ffmpeg.FS('writeFile', 'input.mp4', await window._fetchFile(currentFile));
+    ffmpeg.setProgress(({ ratio }) => setProgress(Math.round(ratio * 35) + 60, 'Memotong video...'));
+    await ffmpeg.run('-i', 'input.mp4', '-ss', String(startSec.toFixed(2)), '-to', String(endSec.toFixed(2)), '-c', 'copy', 'output.mp4');
+    const data = ffmpeg.FS('readFile', 'output.mp4');
+    const blob = new Blob([data.buffer], { type: 'video/mp4' });
+    downloadBtn.href = URL.createObjectURL(blob);
+    downloadBtn.download = currentFile.name.replace('.mp4', '') + '_trimmed.mp4';
+    downloadSize.textContent = `${CH.formatTime(startSec)} – ${CH.formatTime(endSec)} · ${CH.formatSize(blob.size)}`;
+    setProgress(100, 'Selesai!'); downloadCard.classList.remove('hidden');
+    try { ffmpeg.FS('unlink', 'input.mp4'); ffmpeg.FS('unlink', 'output.mp4'); } catch(e) {}
+  } catch(e) { alertBox.innerHTML = '<div class="alert alert-error">⚠️ Trim gagal. Coba file lebih kecil.</div>'; progressWrap.classList.add('hidden'); }
+  convertBtn.disabled = false; convertBtn.innerHTML = '✂️ Trim & Unduh';
+});
+
+fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); loadFile(e.dataTransfer.files[0]); });
+dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+resetBtn.addEventListener('click', () => { fileInput.value = ''; alertBox.innerHTML = ''; currentFile = null; duration = 0; previewArea.classList.add('hidden'); downloadCard.classList.add('hidden'); progressWrap.classList.add('hidden'); dropZone.classList.remove('hidden'); });
+</script>
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+</body>
+</html>
