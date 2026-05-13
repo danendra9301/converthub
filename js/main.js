@@ -1,3 +1,26 @@
+// ── Client-side security hardening ──
+// Anti-clickjacking: bust out of frames (since GitHub Pages doesn't allow X-Frame-Options header)
+(function antiClickjacking() {
+  try {
+    if (window.self !== window.top) {
+      // We are being framed — bust out
+      window.top.location.href = window.self.location.href;
+    }
+  } catch (e) {
+    // Cross-origin top frame access denied — hide content to prevent clickjacking
+    document.documentElement.style.display = 'none';
+    setTimeout(() => { document.documentElement.style.display = 'block'; }, 50);
+  }
+})();
+
+// Strip dangerous protocols from URL params (defense in depth)
+(function sanitizeUrl() {
+  const href = location.href.toLowerCase();
+  if (href.includes('javascript:') || href.includes('vbscript:') || href.includes('data:text/html')) {
+    location.href = location.origin + location.pathname;
+  }
+})();
+
 // Mobile nav toggle
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('nav');
