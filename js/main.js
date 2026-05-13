@@ -82,3 +82,45 @@ function setProgress(id, pct, label) {
 
 // Expose helpers globally
 window.CH = { formatSize, formatTime, downloadBlob, setProgress };
+
+// ── Visitor counter (counterapi.dev — gratis, no signup) ──
+(function visitorCounter() {
+  function init() {
+    const footer = document.querySelector('footer .footer-inner');
+    if (!footer || document.getElementById('chVisitorBox')) return;
+
+    const box = document.createElement('div');
+    box.id = 'chVisitorBox';
+    box.style.cssText = 'margin-top:.85rem;padding:.55rem .9rem;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.2);border-radius:999px;display:inline-flex;align-items:center;gap:.5rem;font-size:.82rem;color:#1e40af;font-weight:600';
+    box.innerHTML = '<i class="fa-solid fa-eye" style="color:#2563eb"></i> Total pengunjung: <strong id="chVisitorCount" style="color:#1d4ed8">memuat...</strong>';
+
+    // wrap so it's centered nicely
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'text-align:center;margin-top:.5rem';
+    wrap.appendChild(box);
+    footer.appendChild(wrap);
+
+    // Increment once per day per visitor
+    const today = new Date().toDateString();
+    const lastVisit = localStorage.getItem('ch_last_visit');
+    const isNewToday = lastVisit !== today;
+    const base = 'https://api.counterapi.dev/v1/converthub-danendra9301/visits';
+    const url = isNewToday ? base + '/up' : base + '/';
+
+    fetch(url)
+      .then(r => r.json())
+      .then(data => {
+        const el = document.getElementById('chVisitorCount');
+        if (!el) return;
+        const n = data.count ?? data.value ?? 0;
+        el.textContent = (typeof n === 'number') ? n.toLocaleString('id-ID') : '—';
+        if (isNewToday) localStorage.setItem('ch_last_visit', today);
+      })
+      .catch(() => {
+        const el = document.getElementById('chVisitorCount');
+        if (el) el.textContent = '—';
+      });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
