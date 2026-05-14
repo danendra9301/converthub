@@ -51,10 +51,10 @@
       <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
     <nav>
-      <a href="../gambar/index.html"><i class="fa-solid fa-image"></i> Gambar</a>
-      <a href="../video/index.html"><i class="fa-solid fa-film"></i> Video</a>
-      <a href="../pdf/index.html"><i class="fa-solid fa-file-pdf"></i> PDF</a>
-      <a href="../lainnya/index.html" class="active"><i class="fa-solid fa-screwdriver-wrench"></i> Lainnya</a>
+      <a href="../gambar/index.html"><i class="fa-solid fa-image" aria-hidden="true"></i> Gambar</a>
+      <a href="../video/index.html"><i class="fa-solid fa-film" aria-hidden="true"></i> Video</a>
+      <a href="../pdf/index.html"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> PDF</a>
+      <a href="../lainnya/index.html" class="active"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> Lainnya</a>
     </nav>
   </div>
 </header>
@@ -66,7 +66,7 @@
       <span>Polyglot Generator</span>
     </nav>
     <div class="tool-header">
-      <div class="t-icon"><i class="fa-solid fa-language icon-orange"></i></div>
+      <div class="t-icon"><i class="fa-solid fa-language icon-orange" aria-hidden="true"></i></div>
       <h1>Polyglot Generator</h1>
       <p>Terjemahkan teks ke banyak bahasa sekaligus. Pilih bahasa tujuan dan klik Terjemahkan.</p>
     </div>
@@ -110,7 +110,7 @@
         <div class="lang-grid" id="langGrid"></div>
       </div>
       <button class="btn btn-primary" id="translateBtn" style="align-self:flex-start">
-        <i class="fa-solid fa-language"></i> Terjemahkan Sekarang
+        <i class="fa-solid fa-language" aria-hidden="true"></i> Terjemahkan Sekarang
       </button>
     </div>
     <div id="alertBox"></div>
@@ -261,7 +261,7 @@ translateBtn.addEventListener('click', async () => {
   });
 
   translateBtn.disabled = false;
-  translateBtn.innerHTML = '<i class="fa-solid fa-language"></i> Terjemahkan Sekarang';
+  translateBtn.innerHTML = '<i class="fa-solid fa-language" aria-hidden="true"></i> Terjemahkan Sekarang';
 });
 
 buildLangGrid();

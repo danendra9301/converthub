@@ -119,9 +119,11 @@ nav a:hover, nav a.active {
 
 .hero-badge {
   display: inline-block;
-  background: rgba(255,255,255,.15);
-  border: 1px solid rgba(255,255,255,.3);
-  padding: .3rem .75rem;
+  background: rgba(255,255,255,.95);
+  border: 1px solid rgba(255,255,255,1);
+  color: #1d4ed8;
+  font-weight: 600;
+  padding: .35rem .85rem;
   border-radius: 20px;
   font-size: .8rem;
   margin-bottom: 1rem;
@@ -231,10 +233,10 @@ main { flex: 1; }
 .tool-card p { font-size: .8rem; color: var(--text-muted); }
 
 /* Icon color variants */
-.icon-blue   { background: #dbeafe; color: #2563eb; }
-.icon-green  { background: #dcfce7; color: #16a34a; }
-.icon-purple { background: #f3e8ff; color: #7c3aed; }
-.icon-orange { background: #ffedd5; color: #ea580c; }
+.icon-blue   { background: #dbeafe; color: #1d4ed8; }
+.icon-green  { background: #dcfce7; color: #15803d; }
+.icon-purple { background: #f3e8ff; color: #6d28d9; }
+.icon-orange { background: #ffedd5; color: #c2410c; }
 
 .badge {
   font-size: .7rem;

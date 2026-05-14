@@ -68,10 +68,10 @@
       <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
     <nav>
-      <a href="../gambar/index.html"><i class="fa-solid fa-image"></i> Gambar</a>
-      <a href="../video/index.html"><i class="fa-solid fa-film"></i> Video</a>
-      <a href="../pdf/index.html"><i class="fa-solid fa-file-pdf"></i> PDF</a>
-      <a href="../lainnya/index.html" class="active"><i class="fa-solid fa-screwdriver-wrench"></i> Lainnya</a>
+      <a href="../gambar/index.html"><i class="fa-solid fa-image" aria-hidden="true"></i> Gambar</a>
+      <a href="../video/index.html"><i class="fa-solid fa-film" aria-hidden="true"></i> Video</a>
+      <a href="../pdf/index.html"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> PDF</a>
+      <a href="../lainnya/index.html" class="active"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> Lainnya</a>
     </nav>
   </div>
 </header>
@@ -83,13 +83,13 @@
       <span>Polyglot File Generator</span>
     </nav>
     <div class="tool-header">
-      <div class="t-icon"><i class="fa-solid fa-file-circle-plus icon-orange"></i></div>
+      <div class="t-icon"><i class="fa-solid fa-file-circle-plus icon-orange" aria-hidden="true"></i></div>
       <h1>Polyglot File Generator</h1>
       <p>Gabungkan file ke dalam satu berkas yang valid sebagai 2 format sekaligus. Cukup rename ekstensinya untuk berpindah format!</p>
     </div>
 
     <div class="info-box">
-      <h2><i class="fa-solid fa-lightbulb"></i> Apa itu Polyglot File?</h2>
+      <h2><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Apa itu Polyglot File?</h2>
       <p>Polyglot file adalah satu berkas tunggal yang valid dalam lebih dari satu format sekaligus. Contoh: file yang sama bisa dibuka sebagai gambar PNG <strong>dan</strong> diekstrak sebagai arsip ZIP — tergantung ekstensi yang dipakai saat membukanya.</p>
     </div>
 
@@ -99,7 +99,7 @@
       <p class="step-desc">Format ini yang akan terlihat saat file dibuka biasa. Dukungan: <strong>PNG, JPG, GIF, BMP, WebP, PDF</strong>.</p>
       <label class="file-pick" id="wrapperPick">
         <input type="file" id="wrapperInput" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp,application/pdf">
-        <span class="pick-icon"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+        <span class="pick-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></span>
         <span class="pick-text">
           <strong>Klik untuk pilih file wrapper</strong>
           <span>Gambar atau PDF — ini yang akan terlihat saat file dibuka normal</span>
@@ -115,7 +115,7 @@
       <p class="step-desc">File-file ini akan tersembunyi di dalam polyglot, dan bisa diekstrak kalau file di-rename jadi <code>.zip</code>. Boleh upload banyak file.</p>
       <label class="file-pick" id="hiddenPick">
         <input type="file" id="hiddenInput" multiple>
-        <span class="pick-icon"><i class="fa-solid fa-folder-plus"></i></span>
+        <span class="pick-icon"><i class="fa-solid fa-folder-plus" aria-hidden="true"></i></span>
         <span class="pick-text">
           <strong>Klik untuk pilih file rahasia</strong>
           <span>Bisa pilih banyak file sekaligus (Ctrl+klik)</span>
@@ -125,26 +125,26 @@
     </div>
 
     <button class="btn btn-primary" id="generateBtn" disabled style="width:100%;justify-content:center;padding:.85rem">
-      <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Polyglot File
+      <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Buat Polyglot File
     </button>
 
     <div id="alertBox"></div>
 
     <!-- RESULT -->
     <div id="resultCard" class="result-card-special" style="display:none">
-      <h2><i class="fa-solid fa-circle-check"></i> Polyglot Berhasil Dibuat!</h2>
+      <h2><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Polyglot Berhasil Dibuat!</h2>
       <p style="font-size:.88rem;opacity:.95;margin-bottom:.25rem">Nama file (tanpa ekstensi):</p>
       <div class="filename-display" id="resultFname">polyglot_file</div>
       <p style="font-size:.85rem;opacity:.9" id="resultMeta"></p>
       <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
-        <a id="downloadBtn" class="btn"><i class="fa-solid fa-download"></i> Unduh File Polyglot</a>
-        <button class="btn btn-outline" id="resetBtn" style="background:transparent;color:white;border-color:rgba(255,255,255,.5)"><i class="fa-solid fa-rotate-left"></i> Mulai Ulang</button>
+        <a id="downloadBtn" class="btn"><i class="fa-solid fa-download" aria-hidden="true"></i> Unduh File Polyglot</a>
+        <button class="btn btn-outline" id="resetBtn" style="background:transparent;color:white;border-color:rgba(255,255,255,.5)"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Mulai Ulang</button>
       </div>
     </div>
 
     <!-- USAGE -->
     <div id="usageBox" class="usage-box" style="display:none">
-      <h2><i class="fa-solid fa-circle-question"></i> Cara Pakai File Polyglot</h2>
+      <h2><i class="fa-solid fa-circle-question" aria-hidden="true"></i> Cara Pakai File Polyglot</h2>
       <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:.85rem">File yang kamu download <strong>tidak punya ekstensi</strong>. Rename file untuk membukanya dalam format berbeda:</p>
       <div id="renameExamples"></div>
       <div style="margin-top:1rem;padding:.75rem;background:#fef3c7;border-radius:8px;font-size:.8rem;color:#78350f">
@@ -207,10 +207,10 @@ function renderWrapper() {
   const map = EXT_MAP[wrapperFile.type];
   wrapperInfo.innerHTML = `
     <div class="selected-file">
-      <i class="fa-solid ${map.icon}"></i>
+      <i class="fa-solid ${map.icon}" aria-hidden="true"></i>
       <span class="fname">${wrapperFile.name}</span>
       <span class="fsize">${CH.formatSize(wrapperFile.size)}</span>
-      <button class="remove-btn" id="rmWrapper" title="Hapus"><i class="fa-solid fa-xmark"></i></button>
+      <button class="remove-btn" id="rmWrapper" title="Hapus"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
     </div>`;
   document.getElementById('rmWrapper').addEventListener('click', e => {
     e.preventDefault();
@@ -236,10 +236,10 @@ function renderHiddenList() {
     const div = document.createElement('div');
     div.className = 'selected-file';
     div.innerHTML = `
-      <i class="fa-solid fa-file"></i>
+      <i class="fa-solid fa-file" aria-hidden="true"></i>
       <span class="fname">${f.name}</span>
       <span class="fsize">${CH.formatSize(f.size)}</span>
-      <button class="remove-btn" title="Hapus"><i class="fa-solid fa-xmark"></i></button>`;
+      <button class="remove-btn" title="Hapus"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>`;
     div.querySelector('.remove-btn').addEventListener('click', () => {
       hiddenFiles.splice(i, 1);
       renderHiddenList();
@@ -328,13 +328,13 @@ generateBtn.addEventListener('click', async () => {
     const fmt1 = `
       <div class="rename-example">
         <div>Rename jadi <code>${baseName}.${wrapperMap.ext}</code></div>
-        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></div>
         <div>Buka sebagai <strong>${wrapperMap.label}</strong></div>
       </div>`;
     const fmt2 = `
       <div class="rename-example">
         <div>Rename jadi <code>${baseName}.zip</code></div>
-        <div class="arrow"><i class="fa-solid fa-arrow-right"></i></div>
+        <div class="arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></div>
         <div>Ekstrak sebagai <strong>Arsip ZIP</strong> (berisi ${hiddenFiles.length} file)</div>
       </div>`;
     renameExamples.innerHTML = fmt1 + fmt2;
@@ -347,7 +347,7 @@ generateBtn.addEventListener('click', async () => {
   }
 
   generateBtn.disabled = false;
-  generateBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> Buat Polyglot File';
+  generateBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Buat Polyglot File';
 });
 
 resetBtn.addEventListener('click', () => {
