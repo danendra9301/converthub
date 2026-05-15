@@ -211,12 +211,32 @@ CH.theme = {
 };
 CH.theme.init();
 
-// ── PWA Service Worker registration (deferred, no-impact) ──
+// ── PWA Service Worker registration (with auto-update on new version) ──
 CH.registerSW = function() {
   if (!('serviceWorker' in navigator)) return;
   window.addEventListener('load', () => {
     setTimeout(() => {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        // Check for updates every page load
+        reg.update().catch(() => {});
+        // When a new SW is found waiting, take over immediately and reload
+        reg.addEventListener('updatefound', () => {
+          const nw = reg.installing;
+          if (!nw) return;
+          nw.addEventListener('statechange', () => {
+            if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+              nw.postMessage('SKIP_WAITING');
+            }
+          });
+        });
+        // Reload page when new SW takes over
+        let refreshed = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (refreshed) return;
+          refreshed = true;
+          window.location.reload();
+        });
+      }).catch(() => {});
     }, 3000);
   }, { once: true });
 };
