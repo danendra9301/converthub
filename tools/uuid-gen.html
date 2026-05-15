@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: blob: data: 'unsafe-inline' 'unsafe-eval'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+<meta name="robots" content="index, follow">
+<title>UUID Generator (v4) – Bulk Random IDs – ConvertHUB</title>
+<meta name="theme-color" content="#2563eb">
+<link rel="manifest" href="/manifest.json">
+<meta name="description" content="Generate UUID v4 secara acak (bulk 1-1000), short ID, atau ULID — pakai crypto.getRandomValues. Copy semua dalam 1 klik.">
+<style>:root{--primary:#2563eb;--primary-dark:#1d4ed8;--accent:#06b6d4;--bg:#f8fafc;--surface:#fff;--text:#0f172a;--text-muted:#475569;--border:#e2e8f0;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}a{color:var(--primary);text-decoration:none}header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}.header-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;height:64px;display:flex;align-items:center;justify-content:space-between}.logo{font-size:1.5rem;font-weight:800;color:var(--primary);display:flex;align-items:center;gap:.4rem}.logo span{color:var(--accent)}nav{display:flex;gap:.25rem}nav a{padding:.4rem .75rem;border-radius:8px;font-size:.9rem;font-weight:500;color:var(--text-muted);display:flex;align-items:center;gap:.35rem}nav a:hover,nav a.active{background:#eff6ff;color:var(--primary)}.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:.4rem;color:var(--text)}main{flex:1}.tool-page{max-width:780px;margin:0 auto;padding:2rem 1.5rem}.breadcrumb{display:flex;align-items:center;gap:.4rem;font-size:.85rem;color:var(--text-muted);margin-bottom:1.5rem}.breadcrumb a{color:var(--text-muted)}.breadcrumb span{color:#cbd5e1}.tool-header{margin-bottom:1.5rem}.t-icon i{display:inline-flex;align-items:center;justify-content:center;width:68px;height:68px;border-radius:18px;font-size:1.75rem;background:#f3e8ff;color:#6d28d9;margin-bottom:.5rem}.tool-header h1{font-size:1.75rem;font-weight:800;margin-bottom:.4rem}.tool-header p{color:var(--text-muted)}.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1rem;border-radius:8px;font-size:.88rem;font-weight:600;border:none;cursor:pointer}.btn-primary{background:var(--primary);color:#fff}.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text)}footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;font-size:.85rem;color:var(--text-muted)}.footer-inner{max-width:1200px;margin:0 auto}.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem;margin-bottom:1rem}.footer-links a{color:var(--text-muted)}@media(max-width:768px){.menu-toggle{display:flex}nav{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 1.5rem;gap:.25rem}nav.open{display:flex}nav a{width:100%}header{position:relative}}.opt-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin:1rem 0}.row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:.85rem}.row label{font-weight:600;font-size:.85rem;min-width:90px}.row select,.row input{padding:.5rem .75rem;border:1px solid var(--border);border-radius:8px;font-size:.9rem;background:var(--bg);color:var(--text)}.row input[type=number]{width:100px}#out{font-family:'JetBrains Mono','Courier New',monospace;font-size:.85rem;background:#0f172a;color:#e2e8f0;padding:1rem;border-radius:10px;max-height:340px;overflow-y:auto;white-space:pre-wrap;word-break:break-all;margin:1rem 0}.btn-row{display:flex;gap:.5rem;flex-wrap:wrap}</style>
+</head>
+<body>
+<header><div class="header-inner"><a href="../index.html" class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 22v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L21 8M3 16l2.64 2.36A9 9 0 0020.49 15"/></svg> Convert<span>HUB</span></a>
+<button class="menu-toggle" aria-label="Buka menu"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+<nav><a href="../gambar/index.html"><i class="fa-solid fa-image" aria-hidden="true"></i> Gambar</a><a href="../video/index.html"><i class="fa-solid fa-film" aria-hidden="true"></i> Video</a><a href="../pdf/index.html"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> PDF</a><a href="../lainnya/index.html" class="active"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> Lainnya</a></nav></div></header>
+<main><div class="tool-page">
+<nav class="breadcrumb"><a href="../index.html">Beranda</a><span>›</span><a href="../lainnya/index.html">Lainnya</a><span>›</span><span>UUID Generator</span></nav>
+<div class="tool-header"><div class="t-icon"><i class="fa-solid fa-fingerprint" aria-hidden="true"></i></div><h1>UUID / ID Generator</h1><p>Generate UUID v4, Short ID (NanoID), atau ULID. Pakai <code style="font-family:monospace;background:#dbeafe;padding:.1rem .4rem;border-radius:4px;font-size:.85rem">crypto.getRandomValues()</code> untuk kualitas acak kriptografis.</p></div>
+<div class="opt-card">
+  <div class="row"><label for="typeSel">Tipe</label>
+    <select id="typeSel">
+      <option value="uuid">UUID v4 (standard)</option>
+      <option value="nano">Short / NanoID (URL-safe)</option>
+      <option value="ulid">ULID (sortable, time-based)</option>
+      <option value="hex">Hex (custom length)</option>
+    </select>
+  </div>
+  <div class="row"><label for="qtyInp">Jumlah</label><input type="number" id="qtyInp" min="1" max="1000" value="5"></div>
+  <div class="row" id="lenRow" style="display:none"><label for="lenInp">Panjang</label><input type="number" id="lenInp" min="4" max="64" value="12"></div>
+  <div class="row"><label for="caseSel">Format</label>
+    <select id="caseSel"><option value="lower">huruf kecil</option><option value="upper">HURUF BESAR</option><option value="nodash">tanpa tanda hubung</option></select>
+  </div>
+</div>
+<div class="btn-row"><button class="btn btn-primary" id="genBtn"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Generate</button><button class="btn btn-outline" id="copyBtn"><i class="fa-solid fa-copy" aria-hidden="true"></i> Salin Semua</button><button class="btn btn-outline" id="dlBtn"><i class="fa-solid fa-download" aria-hidden="true"></i> Unduh .txt</button></div>
+<div id="out" aria-live="polite"></div>
+</div></main>
+<footer><div class="footer-inner"><div class="footer-links"><a href="../gambar/index.html">Gambar</a><a href="../video/index.html">Video</a><a href="../pdf/index.html">PDF</a><a href="../lainnya/index.html">Lainnya</a></div><p>© 2025 ConvertHUB · Privasi terjaga · Semua proses di browser</p></div></footer>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
+<script defer src="../js/main.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+function uuidV4(){const b=new Uint8Array(16);crypto.getRandomValues(b);b[6]=(b[6]&0x0f)|0x40;b[8]=(b[8]&0x3f)|0x80;const h=Array.from(b).map(x=>x.toString(16).padStart(2,'0')).join('');return h.substring(0,8)+'-'+h.substring(8,12)+'-'+h.substring(12,16)+'-'+h.substring(16,20)+'-'+h.substring(20,32);}
+const NANO_AB='useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict';
+function nanoid(len){const b=new Uint8Array(len);crypto.getRandomValues(b);let s='';for(let i=0;i<len;i++)s+=NANO_AB[b[i]&63];return s;}
+const ULID_AB='0123456789ABCDEFGHJKMNPQRSTVWXYZ';
+function ulid(){let t=Date.now();let ts='';for(let i=9;i>=0;i--){ts=ULID_AB[t%32]+ts;t=Math.floor(t/32);}const b=new Uint8Array(16);crypto.getRandomValues(b);let r='';for(let i=0;i<16;i++)r+=ULID_AB[b[i]&31];return ts+r;}
+function hex(len){const b=new Uint8Array(Math.ceil(len/2));crypto.getRandomValues(b);return Array.from(b).map(x=>x.toString(16).padStart(2,'0')).join('').substring(0,len);}
+function transform(s,c){if(c==='upper')return s.toUpperCase();if(c==='nodash')return s.replace(/-/g,'');return s;}
+$('typeSel').addEventListener('change',()=>{$('lenRow').style.display=['nano','hex'].includes($('typeSel').value)?'flex':'none';gen();});
+function gen(){const type=$('typeSel').value;const qty=Math.min(1000,Math.max(1,parseInt($('qtyInp').value)||1));const len=Math.min(64,Math.max(4,parseInt($('lenInp').value)||12));const c=$('caseSel').value;const arr=[];for(let i=0;i<qty;i++){let v;if(type==='uuid')v=uuidV4();else if(type==='nano')v=nanoid(len);else if(type==='ulid')v=ulid();else v=hex(len);arr.push(transform(v,c));}$('out').textContent=arr.join('\n');return arr;}
+$('genBtn').addEventListener('click',gen);
+$('qtyInp').addEventListener('input',gen);
+$('lenInp').addEventListener('input',gen);
+$('caseSel').addEventListener('change',gen);
+$('copyBtn').addEventListener('click',()=>{const t=$('out').textContent;if(!t)return;navigator.clipboard.writeText(t).then(()=>window.CH&&CH.toast&&CH.toast('Semua disalin'));});
+$('dlBtn').addEventListener('click',()=>{const t=$('out').textContent;if(!t)return;const blob=new Blob([t],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ids.txt';a.click();});
+gen();
+</script>
+</body></html>

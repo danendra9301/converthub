@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: blob: data: 'unsafe-inline' 'unsafe-eval'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+<meta name="robots" content="index, follow">
+<title>Base64 Encoder / Decoder Online – ConvertHUB</title>
+<meta name="theme-color" content="#2563eb">
+<link rel="manifest" href="/manifest.json">
+<meta name="description" content="Encode dan decode teks ke Base64 secara online gratis. Support UTF-8, byte-safe, dengan auto-detect dan copy-to-clipboard.">
+<style>:root{--primary:#2563eb;--primary-dark:#1d4ed8;--accent:#06b6d4;--bg:#f8fafc;--surface:#fff;--text:#0f172a;--text-muted:#475569;--border:#e2e8f0;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.1)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}a{color:var(--primary);text-decoration:none}header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}.header-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;height:64px;display:flex;align-items:center;justify-content:space-between}.logo{font-size:1.5rem;font-weight:800;color:var(--primary);display:flex;align-items:center;gap:.4rem}.logo span{color:var(--accent)}nav{display:flex;gap:.25rem}nav a{padding:.4rem .75rem;border-radius:8px;font-size:.9rem;font-weight:500;color:var(--text-muted);display:flex;align-items:center;gap:.35rem}nav a:hover,nav a.active{background:#eff6ff;color:var(--primary)}.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:.4rem;color:var(--text)}main{flex:1}.tool-page{max-width:780px;margin:0 auto;padding:2rem 1.5rem}.breadcrumb{display:flex;align-items:center;gap:.4rem;font-size:.85rem;color:var(--text-muted);margin-bottom:1.5rem}.breadcrumb a{color:var(--text-muted)}.breadcrumb span{color:#cbd5e1}.tool-header{margin-bottom:1.5rem}.t-icon i{display:inline-flex;align-items:center;justify-content:center;width:68px;height:68px;border-radius:18px;font-size:1.75rem;background:#dbeafe;color:#1d4ed8;margin-bottom:.5rem}.tool-header h1{font-size:1.75rem;font-weight:800;margin-bottom:.4rem}.tool-header p{color:var(--text-muted)}.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1rem;border-radius:8px;font-size:.88rem;font-weight:600;border:none;cursor:pointer}.btn-primary{background:var(--primary);color:#fff}.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text)}.alert{padding:.7rem 1rem;border-radius:8px;font-size:.875rem;margin:.85rem 0}.alert-error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}.alert-info{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af}footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;font-size:.85rem;color:var(--text-muted)}.footer-inner{max-width:1200px;margin:0 auto}.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem;margin-bottom:1rem}.footer-links a{color:var(--text-muted)}@media(max-width:768px){.menu-toggle{display:flex}nav{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 1.5rem;gap:.25rem}nav.open{display:flex}nav a{width:100%}header{position:relative}}.mode-tabs{display:flex;gap:.4rem;margin:1rem 0;background:var(--bg);padding:.3rem;border-radius:10px;border:1px solid var(--border);max-width:fit-content}.mode-tab{padding:.5rem 1.2rem;border-radius:8px;border:none;background:transparent;cursor:pointer;font-weight:600;font-size:.88rem;color:var(--text-muted);transition:all .15s}.mode-tab.active{background:var(--primary);color:#fff;box-shadow:0 1px 3px rgba(37,99,235,.3)}textarea{width:100%;min-height:160px;padding:.85rem;border:1px solid var(--border);border-radius:8px;font-family:'JetBrains Mono','Courier New',monospace;font-size:.85rem;resize:vertical;outline:none;background:var(--bg);color:var(--text);line-height:1.5;box-sizing:border-box}textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}label{display:block;font-weight:600;font-size:.85rem;margin:.85rem 0 .35rem;color:var(--text)}.btn-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.85rem}</style>
+</head>
+<body>
+<header><div class="header-inner"><a href="../index.html" class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 22v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L21 8M3 16l2.64 2.36A9 9 0 0020.49 15"/></svg> Convert<span>HUB</span></a>
+<button class="menu-toggle" aria-label="Buka menu"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+<nav><a href="../gambar/index.html"><i class="fa-solid fa-image" aria-hidden="true"></i> Gambar</a><a href="../video/index.html"><i class="fa-solid fa-film" aria-hidden="true"></i> Video</a><a href="../pdf/index.html"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> PDF</a><a href="../lainnya/index.html" class="active"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> Lainnya</a></nav></div></header>
+<main><div class="tool-page">
+<nav class="breadcrumb"><a href="../index.html">Beranda</a><span>›</span><a href="../lainnya/index.html">Lainnya</a><span>›</span><span>Base64</span></nav>
+<div class="tool-header"><div class="t-icon"><i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i></div><h1>Base64 Encoder / Decoder</h1><p>Encode teks/UTF-8 ke Base64 atau decode Base64 ke teks. Aman untuk karakter Unicode (UTF-8 byte-safe).</p></div>
+<div class="mode-tabs" role="tablist">
+  <button class="mode-tab active" data-mode="encode" type="button">Encode</button>
+  <button class="mode-tab" data-mode="decode" type="button">Decode</button>
+</div>
+<label for="inp" id="inpLabel">Teks Input</label>
+<textarea id="inp" placeholder="Ketik atau tempel teks di sini..." aria-label="Input"></textarea>
+<label for="outp" id="outpLabel">Hasil Encode</label>
+<textarea id="outp" placeholder="Output akan muncul di sini..." readonly aria-label="Output"></textarea>
+<div id="msg"></div>
+<div class="btn-row">
+  <button class="btn btn-primary" id="goBtn"><i class="fa-solid fa-play" aria-hidden="true"></i> <span id="goLabel">Encode</span></button>
+  <button class="btn btn-outline" id="copyBtn"><i class="fa-solid fa-copy" aria-hidden="true"></i> Salin Hasil</button>
+  <button class="btn btn-outline" id="swapBtn"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Tukar In/Out</button>
+  <button class="btn btn-outline" id="clearBtn"><i class="fa-solid fa-trash" aria-hidden="true"></i> Bersihkan</button>
+</div>
+</div></main>
+<footer><div class="footer-inner"><div class="footer-links"><a href="../gambar/index.html">Gambar</a><a href="../video/index.html">Video</a><a href="../pdf/index.html">PDF</a><a href="../lainnya/index.html">Lainnya</a></div><p>© 2025 ConvertHUB · Privasi terjaga · Semua proses di browser</p></div></footer>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
+<script defer src="../js/main.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const inp=$('inp'),outp=$('outp'),msg=$('msg');
+let mode='encode';
+function utf8Encode(s){return btoa(unescape(encodeURIComponent(s)));}
+function utf8Decode(b){return decodeURIComponent(escape(atob(b)));}
+function setMsg(t,k){msg.innerHTML=t?`<div class="alert alert-${k}">${t}</div>`:'';}
+function process(){const v=inp.value;if(!v){outp.value='';setMsg('',null);return;}setMsg('',null);try{outp.value=mode==='encode'?utf8Encode(v):utf8Decode(v.replace(/\s+/g,''));}catch(e){outp.value='';setMsg('❌ Input bukan Base64 valid. Pastikan tidak ada karakter di luar A-Z, a-z, 0-9, +, /, =.','error');}}
+document.querySelectorAll('.mode-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.mode-tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;$('inpLabel').textContent=mode==='encode'?'Teks Input':'Base64 Input';$('outpLabel').textContent=mode==='encode'?'Hasil Encode':'Hasil Decode';$('goLabel').textContent=mode==='encode'?'Encode':'Decode';inp.placeholder=mode==='encode'?'Ketik teks...':'Tempel Base64 string...';outp.placeholder='Output akan muncul di sini...';process();}));
+$('goBtn').addEventListener('click',process);
+inp.addEventListener('input',process);
+$('copyBtn').addEventListener('click',()=>{if(!outp.value)return;navigator.clipboard.writeText(outp.value).then(()=>window.CH&&CH.toast&&CH.toast('Disalin'));});
+$('swapBtn').addEventListener('click',()=>{const t=inp.value;inp.value=outp.value;outp.value=t;process();});
+$('clearBtn').addEventListener('click',()=>{inp.value='';outp.value='';setMsg('',null);});
+</script>
+</body></html>
