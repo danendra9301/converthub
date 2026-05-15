@@ -48,7 +48,7 @@ const inp=$('inp'),outp=$('outp'),msg=$('msg');
 let mode='encode';
 function utf8Encode(s){return btoa(unescape(encodeURIComponent(s)));}
 function utf8Decode(b){return decodeURIComponent(escape(atob(b)));}
-function setMsg(t,k){msg.innerHTML=t?`<div class="alert alert-${k}">${t}</div>`:'';}
+function setMsg(t,k){msg.innerHTML='';if(!t)return;const d=document.createElement('div');d.className='alert alert-'+k;d.textContent=t;msg.appendChild(d);}
 function process(){const v=inp.value;if(!v){outp.value='';setMsg('',null);return;}setMsg('',null);try{outp.value=mode==='encode'?utf8Encode(v):utf8Decode(v.replace(/\s+/g,''));}catch(e){outp.value='';setMsg('❌ Input bukan Base64 valid. Pastikan tidak ada karakter di luar A-Z, a-z, 0-9, +, /, =.','error');}}
 document.querySelectorAll('.mode-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.mode-tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;$('inpLabel').textContent=mode==='encode'?'Teks Input':'Base64 Input';$('outpLabel').textContent=mode==='encode'?'Hasil Encode':'Hasil Decode';$('goLabel').textContent=mode==='encode'?'Encode':'Decode';inp.placeholder=mode==='encode'?'Ketik teks...':'Tempel Base64 string...';outp.placeholder='Output akan muncul di sini...';process();}));
 $('goBtn').addEventListener('click',process);

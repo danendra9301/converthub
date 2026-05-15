@@ -275,20 +275,27 @@ function injectFavButton() {
   if (page) page.appendChild(btn);
 }
 
-// ── Inject theme toggle button in header ──
+// ── Inject theme toggle button in header (always visible, including mobile) ──
 function injectThemeButton() {
-  const nav = document.querySelector('nav');
-  if (!nav || document.getElementById('chThemeBtn')) return;
+  const headerInner = document.querySelector('.header-inner');
+  if (!headerInner || document.getElementById('chThemeBtn')) return;
+  const menuToggle = headerInner.querySelector('.menu-toggle');
   const btn = document.createElement('button');
   btn.id = 'chThemeBtn';
   btn.type = 'button';
-  btn.setAttribute('aria-label', 'Ganti tema');
-  btn.style.cssText = 'background:transparent;border:none;cursor:pointer;padding:.4rem .6rem;border-radius:8px;color:var(--text-muted);font-size:.95rem;transition:background .15s';
-  btn.innerHTML = CH.theme.current() === 'dark' ? '<i class="fa-solid fa-sun" aria-hidden="true"></i>' : '<i class="fa-solid fa-moon" aria-hidden="true"></i>';
+  btn.setAttribute('aria-label', 'Ganti tema gelap/terang');
+  btn.style.cssText = 'background:transparent;border:1.5px solid transparent;cursor:pointer;padding:.4rem .65rem;border-radius:8px;color:var(--text-muted);font-size:.95rem;transition:background .15s,color .15s,border-color .15s;margin-left:auto;margin-right:.25rem';
+  const icon = CH.theme.current() === 'dark' ? 'fa-sun' : 'fa-moon';
+  const i = document.createElement('i');
+  i.className = 'fa-solid ' + icon;
+  i.setAttribute('aria-hidden', 'true');
+  btn.appendChild(i);
   btn.addEventListener('click', () => CH.theme.toggle());
-  btn.addEventListener('mouseenter', () => { btn.style.background = '#eff6ff'; });
-  btn.addEventListener('mouseleave', () => { btn.style.background = 'transparent'; });
-  nav.appendChild(btn);
+  btn.addEventListener('mouseenter', () => { btn.style.background = '#eff6ff'; btn.style.color = 'var(--primary)'; });
+  btn.addEventListener('mouseleave', () => { btn.style.background = 'transparent'; btn.style.color = 'var(--text-muted)'; });
+  // Insert BEFORE menu-toggle (so it's always visible on mobile, not hidden in nav)
+  if (menuToggle) headerInner.insertBefore(btn, menuToggle);
+  else headerInner.appendChild(btn);
 }
 
 // ── Inject search bar + surprise me on homepage ──
@@ -317,19 +324,18 @@ function injectHomepageSearch() {
 
   const input = document.getElementById('chSearchInput');
   const surprise = document.getElementById('chSurpriseBtn');
-  const allCards = Array.from(document.querySelectorAll('.tool-grid .tool-card'));
+
+  // Re-query cards on every input/click to include dynamically injected favorites/recent
+  function getCards() { return Array.from(document.querySelectorAll('.tool-grid .tool-card[href]')); }
 
   input.addEventListener('input', () => {
     const q = input.value.toLowerCase().trim();
-    let shown = 0;
-    allCards.forEach(card => {
-      const visible = !q || card.textContent.toLowerCase().includes(q);
-      card.style.display = visible ? '' : 'none';
-      if (visible) shown++;
+    getCards().forEach(card => {
+      card.style.display = (!q || card.textContent.toLowerCase().includes(q)) ? '' : 'none';
     });
   });
   surprise.addEventListener('click', () => {
-    const visible = allCards.filter(c => c.style.display !== 'none' && c.href);
+    const visible = getCards().filter(c => c.style.display !== 'none');
     if (!visible.length) return;
     location.href = visible[Math.floor(Math.random() * visible.length)].href;
   });

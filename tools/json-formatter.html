@@ -48,11 +48,11 @@
 <script>
 const $=id=>document.getElementById(id);
 const inp=$('input'),out=$('output'),msg=$('msg'),inStat=$('inStat'),outStat=$('outStat'),statBox=$('statBox');
-function setMsg(t,k){msg.innerHTML=t?`<div class="alert alert-${k}">${t}</div>`:'';}
+function setMsg(t,k){msg.innerHTML='';if(!t)return;const d=document.createElement('div');d.className='alert alert-'+k;d.textContent=t;msg.appendChild(d);}
 function stats(o){let keys=0,arr=0,depth=0;(function w(v,d){depth=Math.max(depth,d);if(Array.isArray(v)){arr++;v.forEach(x=>w(x,d+1));}else if(v&&typeof v==='object'){Object.keys(v).forEach(k=>{keys++;w(v[k],d+1);});}})(o,0);return{keys,arr,depth};}
 function fmtBytes(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
 function indent(){const v=$('indentSelect').value;return v==='tab'?'\t':parseInt(v);}
-function process(beautify){const t=inp.value.trim();if(!t){setMsg('',null);out.value='';statBox.style.display='none';return;}try{const p=JSON.parse(t);out.value=beautify?JSON.stringify(p,null,indent()):JSON.stringify(p);const s=stats(p);$('sKeys').textContent=s.keys;$('sArr').textContent=s.arr;$('sDepth').textContent=s.depth;$('sSize').textContent=fmtBytes(out.value.length);statBox.style.display='flex';setMsg('✅ JSON valid','success');}catch(e){setMsg('❌ Invalid JSON: '+e.message.replace(/</g,'&lt;'),'error');out.value='';statBox.style.display='none';}}
+function process(beautify){const t=inp.value.trim();if(!t){setMsg('',null);out.value='';statBox.style.display='none';return;}try{const p=JSON.parse(t);out.value=beautify?JSON.stringify(p,null,indent()):JSON.stringify(p);const s=stats(p);$('sKeys').textContent=s.keys;$('sArr').textContent=s.arr;$('sDepth').textContent=s.depth;$('sSize').textContent=fmtBytes(out.value.length);statBox.style.display='flex';setMsg('✅ JSON valid','success');}catch(e){setMsg('❌ Invalid JSON: '+e.message,'error');out.value='';statBox.style.display='none';}}
 function updateStats(){inStat.textContent=inp.value.length+' chars';outStat.textContent=out.value.length+' chars';}
 $('formatBtn').addEventListener('click',()=>process(true));
 $('minifyBtn').addEventListener('click',()=>process(false));
