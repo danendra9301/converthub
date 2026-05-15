@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: blob: data: 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=()">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <title>YouTube Codec Booster – Trigger VP9 / AV1 (Tanpa Upscale) – ConvertHUB</title>
+  <meta name="description" content="Trigger codec VP9 atau AV1 di YouTube tanpa upscale video. Wrap video kamu dalam canvas 1440p atau 4K dengan black bars — kualitas konten tetap utuh, codec naik tier.">
+  <style>:root{--primary:#2563eb;--primary-dark:#1d4ed8;--accent:#06b6d4;--bg:#f8fafc;--surface:#ffffff;--text:#0f172a;--text-muted:#475569;--border:#e2e8f0;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);--shadow-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.06);--shadow-lg:0 10px 15px rgba(0,0,0,.1),0 4px 6px rgba(0,0,0,.05)}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}a{color:var(--primary);text-decoration:none}a:hover{text-decoration:underline}img{max-width:100%;display:block}header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}.header-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}.logo{font-size:1.5rem;font-weight:800;color:var(--primary);letter-spacing:-0.5px;display:flex;align-items:center;gap:.4rem}.logo span{color:var(--accent)}nav{display:flex;align-items:center;gap:.25rem}nav a{padding:.4rem .75rem;border-radius:8px;font-size:.9rem;font-weight:500;color:var(--text-muted);transition:background .15s,color .15s;display:flex;align-items:center;gap:.35rem}nav a i{font-size:.85rem}nav a:hover,nav a.active{background:#eff6ff;color:var(--primary);text-decoration:none}.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:.4rem;color:var(--text)}.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}main{flex:1}.icon-blue{background:#dbeafe;color:#1d4ed8}.icon-green{background:#dcfce7;color:#15803d}.icon-purple{background:#f3e8ff;color:#6d28d9}.icon-orange{background:#ffedd5;color:#c2410c}.tool-page{max-width:780px;margin:0 auto;padding:2rem 1.5rem}.t-icon{display:flex;margin-bottom:.75rem}.t-icon i{display:inline-flex;align-items:center;justify-content:center;width:68px;height:68px;border-radius:18px;font-size:1.75rem}.breadcrumb{display:flex;align-items:center;gap:.4rem;font-size:.85rem;color:var(--text-muted);margin-bottom:1.5rem}.breadcrumb a{color:var(--text-muted)}.breadcrumb a:hover{color:var(--primary)}.breadcrumb span{color:#cbd5e1}.tool-header{margin-bottom:1.5rem}.tool-header .t-icon{font-size:2.5rem;margin-bottom:.5rem}.tool-header h1{font-size:1.75rem;font-weight:800;margin-bottom:.4rem}.tool-header p{color:var(--text-muted)}.drop-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:3rem 2rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:#f8fafc;position:relative}.drop-zone:hover,.drop-zone.drag-over{border-color:var(--primary);background:#eff6ff}.drop-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}.drop-zone .dz-icon{font-size:3rem;margin-bottom:.75rem;color:var(--text-muted)}.drop-zone p{color:var(--text-muted);font-size:.9rem}.drop-zone strong{display:block;font-size:1rem;color:var(--text);margin-bottom:.25rem}.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.25rem;border-radius:8px;font-size:.9rem;font-weight:600;border:none;cursor:pointer;transition:background .15s,transform .1s,box-shadow .15s}.btn:active{transform:scale(.98)}.btn-primary{background:var(--primary);color:white;box-shadow:0 1px 3px rgba(37,99,235,.3)}.btn-primary:hover{background:var(--primary-dark);box-shadow:0 4px 8px rgba(37,99,235,.3)}.btn-primary:disabled{background:#93c5fd;cursor:not-allowed;transform:none}.btn-success{background:#16a34a;color:white}.btn-success:hover{background:#15803d}.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text)}.btn-outline:hover{border-color:var(--primary);color:var(--primary);background:#eff6ff}.progress-wrap{margin:1rem 0}.progress-label{font-size:.85rem;color:var(--text-muted);margin-bottom:.4rem;display:flex;justify-content:space-between}.progress-bar{height:8px;background:var(--border);border-radius:99px;overflow:hidden}.progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:99px;transition:width .3s ease;width:0%}.alert{padding:.75rem 1rem;border-radius:8px;font-size:.875rem;margin:1rem 0;display:flex;align-items:flex-start;gap:.5rem}.alert-info{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af}.alert-error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}.alert-success{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534}.alert-warning{background:#fffbeb;border:1px solid #fde68a;color:#92400e}.steps{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin:1.5rem 0}.steps h2,.steps h3{font-size:.9rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem}.steps ol{padding-left:1.25rem;display:flex;flex-direction:column;gap:.4rem}.steps li{font-size:.875rem;color:var(--text-muted)}.action-row{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.25rem;align-items:center}.download-card{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius);padding:1.25rem;margin-top:1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}.download-card.hidden{display:none}.download-info{display:flex;flex-direction:column;gap:.2rem}.download-info strong{font-size:.95rem}.download-info span{font-size:.8rem;color:#16a34a}.video-player-wrap{background:#0f172a;border-radius:var(--radius);overflow:hidden;margin:1rem 0}.video-player-wrap video{width:100%;display:block;max-height:300px}.preview-area{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-top:1.25rem}.preview-area h3{font-size:1rem;font-weight:700;margin-bottom:1rem}.file-info{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.75rem;font-size:.8rem;color:var(--text-muted)}.file-info-item{display:flex;align-items:center;gap:.3rem}footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;font-size:.85rem;color:var(--text-muted)}.footer-inner{max-width:1200px;margin:0 auto}.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem;margin-bottom:1rem}.footer-links a{color:var(--text-muted)}.footer-links a:hover{color:var(--primary)}footer p{margin-top:.5rem}@media (max-width:768px){.menu-toggle{display:flex}nav{display:none;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 1.5rem;gap:.25rem;box-shadow:var(--shadow-md)}nav.open{display:flex}nav a{width:100%}.download-card{flex-direction:column;align-items:flex-start}header{position:relative}}.hidden{display:none !important}.spinner{width:20px;height:20px;border:2.5px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;display:inline-block}@keyframes spin{to{transform:rotate(360deg)}}</style>
+  <style>
+    .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+    @media (max-width: 540px) { .mode-grid { grid-template-columns: 1fr; } }
+    .mode-card { border: 2px solid var(--border); border-radius: var(--radius); padding: 1.25rem; background: var(--surface); cursor: pointer; transition: all .15s; text-align: left; }
+    .mode-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .mode-card.selected { border-color: var(--primary); background: #eff6ff; box-shadow: 0 0 0 4px rgba(37,99,235,.1); }
+    .mode-card .codec-tag { display: inline-block; font-family: monospace; font-weight: 800; font-size: 1.4rem; padding: .15rem .55rem; border-radius: 6px; margin-bottom: .35rem; }
+    .mode-card .codec-vp9 { background: #ffedd5; color: #c2410c; }
+    .mode-card .codec-av1 { background: #f3e8ff; color: #6d28d9; }
+    .mode-card .res-label { font-size: .9rem; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
+    .mode-card .res-desc { font-size: .78rem; color: var(--text-muted); line-height: 1.5; }
+    .why-box { background: linear-gradient(135deg, #fef3c7, #fed7aa); border-left: 4px solid #f59e0b; padding: 1rem 1.25rem; border-radius: 8px; margin: 1rem 0; }
+    .why-box strong { color: #92400e; display: block; margin-bottom: .35rem; font-size: .9rem; }
+    .why-box p { font-size: .82rem; color: #78350f; line-height: 1.55; margin: 0; }
+    .input-spec { display: flex; gap: .5rem; align-items: center; font-size: .8rem; background: var(--bg); padding: .5rem .75rem; border-radius: 6px; margin-top: .5rem; flex-wrap: wrap; }
+    .input-spec code { font-family: monospace; font-weight: 700; color: var(--primary); }
+    .input-spec .arrow { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 22v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L21 8M3 16l2.64 2.36A9 9 0 0020.49 15"/></svg>
+      Convert<span>HUB</span>
+    </a>
+    <button class="menu-toggle" aria-label="Buka menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <nav>
+      <a href="../gambar/index.html"><i class="fa-solid fa-image" aria-hidden="true"></i> Gambar</a>
+      <a href="../video/index.html" class="active"><i class="fa-solid fa-film" aria-hidden="true"></i> Video</a>
+      <a href="../pdf/index.html"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> PDF</a>
+      <a href="../lainnya/index.html"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i> Lainnya</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="tool-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Beranda</a><span>›</span>
+      <a href="../video/index.html">Video</a><span>›</span>
+      <span>Codec Booster</span>
+    </nav>
+    <div class="tool-header">
+      <div class="t-icon"><i class="fa-solid fa-rocket icon-green" aria-hidden="true"></i></div>
+      <h1>YouTube Codec Booster</h1>
+      <p>Trigger codec <strong>VP9</strong> atau <strong>AV1</strong> di YouTube tanpa upscale konten. Tool ini wrap video kamu dalam canvas resolusi tinggi dengan black bars — kualitas konten asli tetap utuh.</p>
+    </div>
+
+    <div class="why-box">
+      <strong><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Kenapa Tool Ini Bekerja?</strong>
+      <p>YouTube algoritma pilih codec berdasar resolusi video upload. Video <strong>1440p+</strong> dapat <strong>VP9</strong>, video <strong>4K+</strong> dapat <strong>AV1</strong>. Tool ini bukan mengupscale (yang merusak kualitas), tapi membungkus video asli di canvas lebih besar dengan border hitam. Resultnya: YouTube lihat "1440p" / "4K", konten kamu tetap tajam asli.</p>
+    </div>
+
+    <div class="alert alert-info">⏳ Tool ini pakai ffmpeg.wasm — loading pertama ~30 detik, proses video tergantung durasi (1 menit video ≈ 2-4 menit proses).</div>
+
+    <div class="steps">
+      <h2><i class="fa-solid fa-list-ol" aria-hidden="true"></i> Cara Pakai</h2>
+      <ol>
+        <li>Upload video MP4 (rekomendasi: 1080p untuk hasil terbaik).</li>
+        <li>Pilih mode: <strong>VP9 (1440p)</strong> atau <strong>AV1 (4K)</strong>.</li>
+        <li>Klik <strong>Proses Video</strong> dan tunggu.</li>
+        <li>Unduh hasil, upload ke YouTube — YouTube otomatis kasih codec yang dipilih.</li>
+      </ol>
+    </div>
+
+    <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Area unggah video">
+      <input type="file" id="fileInput" accept="video/mp4,.mp4" aria-label="Pilih file MP4">
+      <div class="dz-icon"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i></div>
+      <strong>Seret file MP4 ke sini</strong>
+      <p>MP4 · Maks. 200MB · Rekomendasi 1080p</p>
+    </div>
+
+    <div id="alertBox"></div>
+
+    <div class="preview-area hidden" id="previewArea">
+      <h3>File Dipilih</h3>
+      <div class="video-player-wrap">
+        <video id="videoPreview" controls aria-label="Pratinjau video"></video>
+      </div>
+      <div class="file-info" id="fileInfo"></div>
+      <div class="input-spec" id="inputSpec" style="display:none"></div>
+
+      <h3 style="margin-top:1.5rem">Pilih Mode Boost</h3>
+      <div class="mode-grid">
+        <button class="mode-card" data-mode="vp9" type="button">
+          <span class="codec-tag codec-vp9">VP9</span>
+          <div class="res-label">1440p (2560 × 1440)</div>
+          <div class="res-desc">Rekomendasi untuk video 1080p atau lebih kecil. YouTube biasanya kasih codec <strong>VP9</strong> di resolusi ini.</div>
+        </button>
+        <button class="mode-card" data-mode="av1" type="button">
+          <span class="codec-tag codec-av1">AV1</span>
+          <div class="res-label">4K (3840 × 2160)</div>
+          <div class="res-desc">Untuk video 1080p/1440p. YouTube cenderung kasih codec <strong>AV1</strong> (next-gen) di 4K, terutama untuk video populer.</div>
+        </button>
+      </div>
+
+      <div class="action-row">
+        <button class="btn btn-primary" id="convertBtn" disabled><i class="fa-solid fa-rocket" aria-hidden="true"></i> Proses Video</button>
+        <button class="btn btn-outline" id="resetBtn"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Ganti File</button>
+      </div>
+    </div>
+
+    <div class="progress-wrap hidden" id="progressWrap">
+      <div class="progress-label"><span id="progressLabel">Memproses...</span><span id="progressText">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="download-card hidden" id="downloadCard">
+      <div class="download-info">
+        <strong>✅ Video Boosted siap upload!</strong>
+        <span id="downloadSize"></span>
+      </div>
+      <a id="downloadBtn" class="btn btn-success" download="boosted.mp4"><i class="fa-solid fa-download" aria-hidden="true"></i> Unduh MP4</a>
+    </div>
+
+    <div class="alert alert-warning" style="margin-top:2rem">
+      <div>
+        <strong>Catatan:</strong> Penentuan codec di YouTube tidak dijamin 100% — algoritmanya juga lihat popularitas video, jumlah view, dan faktor lain. Tapi resolusi 1440p+/4K adalah <em>syarat</em> untuk dapat VP9/AV1. Tool ini memenuhi syarat tersebut tanpa merusak kualitas konten asli.
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="../gambar/index.html">Gambar</a><a href="../video/index.html">Video</a>
+      <a href="../pdf/index.html">PDF</a><a href="../lainnya/index.html">Lainnya</a>
+    </div>
+    <p>© 2025 ConvertHUB · Privasi terjaga · Semua proses di browser</p>
+  </div>
+</footer>
+  <!-- Performance: preconnect CDNs -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <!-- Font Awesome (non-blocking) -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+<script defer src="../js/main.js"></script>
+<script>
+const dropZone    = document.getElementById('dropZone');
+const fileInput   = document.getElementById('fileInput');
+const alertBox    = document.getElementById('alertBox');
+const previewArea = document.getElementById('previewArea');
+const videoPreview = document.getElementById('videoPreview');
+const fileInfo    = document.getElementById('fileInfo');
+const inputSpec   = document.getElementById('inputSpec');
+const convertBtn  = document.getElementById('convertBtn');
+const resetBtn    = document.getElementById('resetBtn');
+const progressWrap = document.getElementById('progressWrap');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const progressLabel = document.getElementById('progressLabel');
+const downloadCard = document.getElementById('downloadCard');
+const downloadBtn  = document.getElementById('downloadBtn');
+const downloadSize = document.getElementById('downloadSize');
+
+let currentFile = null, videoW = 0, videoH = 0;
+let selectedMode = null;
+let ffmpeg = null, ffmpegLoaded = false;
+
+const MODES = {
+  vp9: { w: 2560, h: 1440, label: '1440p / VP9' },
+  av1: { w: 3840, h: 2160, label: '4K / AV1' }
+};
+
+function setProgress(pct, label) {
+  progressWrap.classList.remove('hidden');
+  progressFill.style.width = pct + '%';
+  progressText.textContent = pct + '%';
+  if (label) progressLabel.textContent = label;
+}
+
+function fmtSize(b) { if (b < 1048576) return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(2)+' MB'; }
+
+function loadFile(file) {
+  alertBox.innerHTML = '';
+  if (!file || !file.type.match('video/mp4')) {
+    alertBox.innerHTML = '<div class="alert alert-error">⚠️ Harap unggah file MP4.</div>'; return;
+  }
+  if (file.size > 200 * 1024 * 1024) {
+    alertBox.innerHTML = '<div class="alert alert-error">⚠️ File terlalu besar. Maks. 200MB.</div>'; return;
+  }
+  currentFile = file;
+  videoPreview.src = URL.createObjectURL(file);
+  videoPreview.onloadedmetadata = () => {
+    videoW = videoPreview.videoWidth;
+    videoH = videoPreview.videoHeight;
+    inputSpec.style.display = 'flex';
+    inputSpec.innerHTML = `<i class="fa-solid fa-video" style="color:var(--primary)" aria-hidden="true"></i> Resolusi asli: <code>${videoW}×${videoH}</code> <span class="arrow">→</span> Akan dibungkus ke canvas yang dipilih`;
+    refreshModeCards();
+  };
+  fileInfo.innerHTML = `<span class="file-info-item"><i class="fa-solid fa-file-video" aria-hidden="true"></i> ${file.name}</span><span class="file-info-item"><i class="fa-solid fa-database" aria-hidden="true"></i> ${fmtSize(file.size)}</span>`;
+  dropZone.classList.add('hidden');
+  previewArea.classList.remove('hidden');
+  downloadCard.classList.add('hidden');
+  progressWrap.classList.add('hidden');
+  selectedMode = null;
+  convertBtn.disabled = true;
+}
+
+function refreshModeCards() {
+  document.querySelectorAll('.mode-card').forEach(card => {
+    const mode = MODES[card.dataset.mode];
+    // Disable if input already >= target dimensions (no point booster)
+    const tooLarge = (videoW >= mode.w && videoH >= mode.h);
+    card.disabled = tooLarge;
+    card.style.opacity = tooLarge ? '0.4' : '1';
+    card.style.cursor = tooLarge ? 'not-allowed' : 'pointer';
+    if (tooLarge && card.classList.contains('selected')) {
+      card.classList.remove('selected');
+      selectedMode = null;
+      convertBtn.disabled = true;
+    }
+  });
+  // If both modes too large, show warning
+  const vp9Card = document.querySelector('[data-mode="vp9"]');
+  const av1Card = document.querySelector('[data-mode="av1"]');
+  if (vp9Card.disabled && av1Card.disabled) {
+    alertBox.innerHTML = '<div class="alert alert-warning">⚠️ Video kamu sudah 4K+ — tidak perlu booster. Upload langsung ke YouTube.</div>';
+  } else if (vp9Card.disabled) {
+    alertBox.innerHTML = '<div class="alert alert-info">ℹ️ Video sudah ≥1440p — pakai mode AV1 (4K) untuk tier codec lebih tinggi.</div>';
+  }
+}
+
+document.querySelectorAll('.mode-card').forEach(card => {
+  card.addEventListener('click', () => {
+    if (card.disabled) return;
+    document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedMode = card.dataset.mode;
+    convertBtn.disabled = false;
+  });
+});
+
+async function loadFFmpeg() {
+  if (ffmpegLoaded) return true;
+  if (!window.FFmpeg) {
+    setProgress(2, 'Memuat library ffmpeg.wasm (sekali per sesi)...');
+    await new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js';
+      s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+  setProgress(5, 'Inisialisasi ffmpeg.wasm...');
+  try {
+    const { createFFmpeg, fetchFile } = FFmpeg;
+    ffmpeg = createFFmpeg({ log: false, progress: ({ ratio }) => setProgress(Math.min(Math.round(ratio * 45) + 5, 50), 'Inisialisasi ffmpeg.wasm...') });
+    await ffmpeg.load();
+    ffmpegLoaded = true;
+    window._fetchFile = fetchFile;
+    return true;
+  } catch(e) {
+    alertBox.innerHTML = '<div class="alert alert-error">⚠️ Gagal memuat ffmpeg.wasm. Refresh halaman atau coba browser lain.</div>';
+    progressWrap.classList.add('hidden');
+    return false;
+  }
+}
+
+convertBtn.addEventListener('click', async () => {
+  if (!currentFile || !selectedMode) return;
+  const mode = MODES[selectedMode];
+  convertBtn.disabled = true;
+  convertBtn.innerHTML = '<span class="spinner"></span> Memproses...';
+  alertBox.innerHTML = '';
+
+  const ok = await loadFFmpeg();
+  if (!ok) { convertBtn.disabled = false; convertBtn.innerHTML = '<i class="fa-solid fa-rocket"></i> Proses Video'; return; }
+
+  setProgress(55, `Mem-wrap video ke ${mode.label}...`);
+  try {
+    ffmpeg.FS('writeFile', 'input.mp4', await window._fetchFile(currentFile));
+    ffmpeg.setProgress(({ ratio }) => setProgress(Math.round(ratio * 40) + 55, `Mem-wrap ke ${mode.label}...`));
+
+    // Pad to target resolution with black bars, centered. NO scaling of content.
+    // CRF 18 = high quality. Preset fast for reasonable speed in browser.
+    await ffmpeg.run(
+      '-i', 'input.mp4',
+      '-vf', `pad=${mode.w}:${mode.h}:(${mode.w}-iw)/2:(${mode.h}-ih)/2:color=black`,
+      '-c:v', 'libx264',
+      '-preset', 'fast',
+      '-crf', '18',
+      '-pix_fmt', 'yuv420p',
+      '-c:a', 'copy',
+      '-movflags', '+faststart',
+      'output.mp4'
+    );
+
+    const data = ffmpeg.FS('readFile', 'output.mp4');
+    const blob = new Blob([data.buffer], { type: 'video/mp4' });
+    downloadBtn.href = URL.createObjectURL(blob);
+    downloadBtn.download = currentFile.name.replace(/\.mp4$/i, '') + `_${selectedMode === 'vp9' ? '1440p' : '4K'}_boosted.mp4`;
+    downloadSize.textContent = `${mode.label} · ${fmtSize(blob.size)} · siap upload ke YouTube`;
+    setProgress(100, 'Selesai!');
+    downloadCard.classList.remove('hidden');
+
+    try { ffmpeg.FS('unlink', 'input.mp4'); ffmpeg.FS('unlink', 'output.mp4'); } catch(e) {}
+  } catch(e) {
+    alertBox.innerHTML = `<div class="alert alert-error">⚠️ Proses gagal: ${e.message || 'Coba file lebih kecil atau format MP4 standar.'}</div>`;
+    progressWrap.classList.add('hidden');
+  }
+
+  convertBtn.disabled = false;
+  convertBtn.innerHTML = '<i class="fa-solid fa-rocket" aria-hidden="true"></i> Proses Video';
+});
+
+resetBtn.addEventListener('click', () => {
+  fileInput.value = '';
+  currentFile = null;
+  videoW = videoH = 0;
+  selectedMode = null;
+  alertBox.innerHTML = '';
+  previewArea.classList.add('hidden');
+  downloadCard.classList.add('hidden');
+  progressWrap.classList.add('hidden');
+  dropZone.classList.remove('hidden');
+  document.querySelectorAll('.mode-card').forEach(c => { c.classList.remove('selected'); c.disabled = false; c.style.opacity = '1'; c.style.cursor = 'pointer'; });
+  convertBtn.disabled = true;
+});
+
+fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); loadFile(e.dataTransfer.files[0]); });
+dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+</script>
+</body>
+</html>
